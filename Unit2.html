@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TMS · Gerenciar Motoristas</title>
+  <title>SGE · Gerenciar Alunos</title>
   <style>
     * {
       margin: 0;
@@ -86,7 +86,7 @@
     .table-wrapper {
       background: #1e293b;
       border-radius: 12px;
-      overflow: hidden;
+      overflow-x: auto;
       border: 1px solid #334155;
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
@@ -94,6 +94,7 @@
     table {
       width: 100%;
       border-collapse: collapse;
+      white-space: nowrap;
     }
 
     thead { background: #0f172a; }
@@ -124,16 +125,6 @@
       text-align: center;
       color: #64748b;
     }
-
-    .badge {
-      padding: 0.25rem 0.6rem;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 600;
-    }
-
-    .badge-ativo { background: #064e3b; color: #6ee7b7; }
-    .badge-inativo { background: #7f1d1d; color: #fca5a5; }
 
     .actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 
@@ -295,8 +286,8 @@
     /* ===== CSS de impressão ===== */
     @media print {
       @page {
-        size: A4;
-        margin: 1.5cm;
+        size: A4 landscape; /* Melhor para caber mais colunas */
+        margin: 1cm;
       }
 
       body {
@@ -350,6 +341,7 @@
         border: 1px solid #ccc !important;
         padding: 0.5rem !important;
         font-size: 0.8rem !important;
+        white-space: normal;
       }
 
       th {
@@ -371,12 +363,6 @@
         width: 36px !important;
         height: 36px !important;
         font-size: 0.75rem !important;
-        border: 1px solid #999 !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-      }
-
-      .badge {
         border: 1px solid #999 !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
@@ -406,10 +392,10 @@
 <body>
   <div class="container">
     <header>
-      <h1>TMS · <span class="destaque">Motoristas</span></h1>
+      <h1>SGE · <span class="destaque">Alunos</span></h1>
       <div class="header-actions">
         <button class="btn btn-print" onclick="imprimirTodos()">🖨️ Imprimir PDF</button>
-        <button class="btn btn-primary" onclick="abrirModal()">➕ Novo Motorista</button>
+        <button class="btn btn-primary" onclick="abrirModal()">➕ Novo Aluno</button>
       </div>
       <div class="print-info" id="print-info"></div>
     </header>
@@ -419,10 +405,11 @@
         <thead>
           <tr>
             <th>Foto</th>
-            <th>Nome</th>
-            <th>CNH</th>
-            <th>Telefone</th>
-            <th>Status</th>
+            <th>Nome Completo</th>
+            <th>Matrícula SGE</th>
+            <th>Nascimento</th>
+            <th>Filiação 1</th>
+            <th>Filiação 2</th>
             <th>Ações</th>
           </tr>
         </thead>
@@ -431,20 +418,20 @@
     </div>
 
     <div class="print-footer" id="print-footer">
-      Documento gerado pelo TMS · Gerenciar Motoristas
+      Documento gerado pelo SGE · Gerenciar Alunos
     </div>
   </div>
 
   <!-- Modal -->
   <div class="modal-overlay" id="modal">
     <div class="modal">
-      <h2 id="modal-title">Novo Motorista</h2>
-      <form id="form-motorista" onsubmit="salvar(event)">
-        <input type="hidden" id="motorista-id">
+      <h2 id="modal-title">Novo Aluno</h2>
+      <form id="form-aluno" onsubmit="salvar(event)">
+        <input type="hidden" id="aluno-id">
         <input type="hidden" id="foto-base64">
 
         <div class="form-group">
-          <label>Foto</label>
+          <label>Foto do Aluno</label>
           <div class="foto-upload">
             <div class="foto-preview" id="foto-preview">👤</div>
             <div class="foto-upload-actions">
@@ -456,24 +443,26 @@
         </div>
 
         <div class="form-group">
-          <label>Nome</label>
-          <input type="text" id="nome" required placeholder="Ex: João da Silva">
+          <label>Nome Completo</label>
+          <input type="text" id="nome" placeholder="Ex: Maria Oliveira">
         </div>
         <div class="form-group">
-          <label>CNH</label>
-          <input type="text" id="cnh" required placeholder="Ex: 12345678900">
+          <label>Matrícula SGE</label>
+          <input type="text" id="matricula" placeholder="Ex: 2024001">
         </div>
         <div class="form-group">
-          <label>Telefone</label>
-          <input type="text" id="telefone" required placeholder="(11) 99999-9999">
+          <label>Data de Nascimento</label>
+          <input type="date" id="dataNascimento">
         </div>
         <div class="form-group">
-          <label>Status</label>
-          <select id="status">
-            <option value="Ativo">Ativo</option>
-            <option value="Inativo">Inativo</option>
-          </select>
+          <label>Filiação 1 (Mãe)</label>
+          <input type="text" id="filiacao1" placeholder="Nome da mãe">
         </div>
+        <div class="form-group">
+          <label>Filiação 2 (Pai)</label>
+          <input type="text" id="filiacao2" placeholder="Nome do pai (opcional)">
+        </div>
+
         <div class="modal-actions">
           <button type="button" class="btn btn-secondary" onclick="fecharModal()">Cancelar</button>
           <button type="submit" class="btn btn-primary">Salvar</button>
@@ -484,59 +473,56 @@
 
   <script>
     // ===== Estado =====
-    let motoristas = JSON.parse(localStorage.getItem('tms_motoristas')) || [];
+    let alunos = JSON.parse(localStorage.getItem('sge_alunos')) || [];
     let editandoId = null;
-    let filtroImpressao = null; // null = todos, id = motorista específico
+    let filtroImpressao = null;
 
     // ===== Persistência =====
     function persistir() {
       try {
-        localStorage.setItem('tms_motoristas', JSON.stringify(motoristas));
+        localStorage.setItem('sge_alunos', JSON.stringify(alunos));
       } catch (e) {
         alert('Não foi possível salvar. As fotos podem estar ocupando muito espaço do localStorage. Tente fotos menores.');
       }
     }
 
-    // ===== Render =====
+    // ===== Render Tabela =====
     function render() {
       const tbody = document.getElementById('tabela-body');
       const lista = filtroImpressao
-        ? motoristas.filter(m => m.id === filtroImpressao)
-        : motoristas;
+        ? alunos.filter(a => a.id === filtroImpressao)
+        : alunos;
 
       if (lista.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="6" class="empty">Nenhum motorista cadastrado ainda. Clique em "Novo Motorista" para começar.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="7" class="empty">Nenhum aluno cadastrado ainda. Clique em "Novo Aluno" para começar.</td></tr>`;
         return;
       }
 
-      tbody.innerHTML = lista.map(m => `
+      tbody.innerHTML = lista.map(a => `
         <tr>
-          <td>${renderAvatar(m)}</td>
-          <td>${escapeHtml(m.nome)}</td>
-          <td>${escapeHtml(m.cnh)}</td>
-          <td>${escapeHtml(m.telefone)}</td>
-          <td>
-            <span class="badge ${m.status === 'Ativo' ? 'badge-ativo' : 'badge-inativo'}">
-              ${m.status}
-            </span>
-          </td>
+          <td>${renderAvatar(a)}</td>
+          <td>${escapeHtml(a.nome) || 'Sem nome'}</td>
+          <td>${escapeHtml(a.matricula) || '-'}</td>
+          <td>${a.dataNascimento ? formatarData(a.dataNascimento) : '-'}</td>
+          <td>${escapeHtml(a.filiacao1) || '-'}</td>
+          <td>${escapeHtml(a.filiacao2) || '-'}</td>
           <td>
             <div class="actions">
-              <button class="btn btn-edit btn-sm" onclick="editar(${m.id})">✏️ Editar</button>
-              <button class="btn btn-danger btn-sm" onclick="excluir(${m.id})">🗑️ Excluir</button>
-              <button class="btn btn-print btn-sm" onclick="imprimirUm(${m.id})" title="Imprimir apenas este registro">🖨️ PDF</button>
+              <button class="btn btn-edit btn-sm" onclick="editar(${a.id})">✏️ Editar</button>
+              <button class="btn btn-danger btn-sm" onclick="excluir(${a.id})">🗑️ Excluir</button>
+              <button class="btn btn-print btn-sm" onclick="imprimirUm(${a.id})" title="Imprimir apenas este registro">🖨️ PDF</button>
             </div>
           </td>
         </tr>
       `).join('');
     }
 
-    function renderAvatar(m) {
-      if (m.foto) {
-        return `<img src="${m.foto}" alt="Foto de ${escapeHtml(m.nome)}" class="avatar">`;
+    function renderAvatar(a) {
+      if (a.foto) {
+        return `<img src="${a.foto}" alt="Foto de ${escapeHtml(a.nome)}" class="avatar">`;
       }
-      const iniciais = getIniciais(m.nome);
-      const cor = corPorNome(m.nome);
+      const iniciais = getIniciais(a.nome || '?');
+      const cor = corPorNome(a.nome || '?');
       return `<div class="avatar-initials" style="background:${cor}">${iniciais}</div>`;
     }
 
@@ -553,25 +539,32 @@
       return cores[Math.abs(hash) % cores.length];
     }
 
+    function formatarData(dataString) {
+      if (!dataString) return '-';
+      const [ano, mes, dia] = dataString.split('-');
+      return `${dia}/${mes}/${ano}`;
+    }
+
     // ===== Modal =====
-    function abrirModal(motorista = null) {
+    function abrirModal(aluno = null) {
       const modal = document.getElementById('modal');
       const title = document.getElementById('modal-title');
 
-      if (motorista) {
-        title.textContent = 'Editar Motorista';
-        document.getElementById('motorista-id').value = motorista.id;
-        document.getElementById('nome').value = motorista.nome;
-        document.getElementById('cnh').value = motorista.cnh;
-        document.getElementById('telefone').value = motorista.telefone;
-        document.getElementById('status').value = motorista.status;
-        document.getElementById('foto-base64').value = motorista.foto || '';
-        atualizarPreview(motorista.foto || null);
-        editandoId = motorista.id;
+      if (aluno) {
+        title.textContent = 'Editar Aluno';
+        document.getElementById('aluno-id').value = aluno.id;
+        document.getElementById('nome').value = aluno.nome || '';
+        document.getElementById('matricula').value = aluno.matricula || '';
+        document.getElementById('dataNascimento').value = aluno.dataNascimento || '';
+        document.getElementById('filiacao1').value = aluno.filiacao1 || '';
+        document.getElementById('filiacao2').value = aluno.filiacao2 || '';
+        document.getElementById('foto-base64').value = aluno.foto || '';
+        atualizarPreview(aluno.foto || null);
+        editandoId = aluno.id;
       } else {
-        title.textContent = 'Novo Motorista';
-        document.getElementById('form-motorista').reset();
-        document.getElementById('motorista-id').value = '';
+        title.textContent = 'Novo Aluno';
+        document.getElementById('form-aluno').reset();
+        document.getElementById('aluno-id').value = '';
         document.getElementById('foto-base64').value = '';
         atualizarPreview(null);
         editandoId = null;
@@ -582,7 +575,7 @@
 
     function fecharModal() {
       document.getElementById('modal').classList.remove('active');
-      document.getElementById('form-motorista').reset();
+      document.getElementById('form-aluno').reset();
       document.getElementById('foto-base64').value = '';
       atualizarPreview(null);
       editandoId = null;
@@ -633,32 +626,32 @@
       atualizarPreview(null);
     }
 
-    // ===== Criar / Atualizar =====
+    // ===== Criar / Atualizar (Sem obrigatoriedade) =====
     function salvar(event) {
       event.preventDefault();
 
       const nome = document.getElementById('nome').value.trim();
-      const cnh = document.getElementById('cnh').value.trim();
-      const telefone = document.getElementById('telefone').value.trim();
-      const status = document.getElementById('status').value;
+      const matricula = document.getElementById('matricula').value.trim();
+      const dataNascimento = document.getElementById('dataNascimento').value;
+      const filiacao1 = document.getElementById('filiacao1').value.trim();
+      const filiacao2 = document.getElementById('filiacao2').value.trim();
       const foto = document.getElementById('foto-base64').value;
 
-      if (!nome || !cnh || !telefone) return;
-
       if (editandoId) {
-        motoristas = motoristas.map(m =>
-          m.id === editandoId ? { ...m, nome, cnh, telefone, status, foto } : m
+        alunos = alunos.map(a =>
+          a.id === editandoId ? { ...a, nome, matricula, dataNascimento, filiacao1, filiacao2, foto } : a
         );
       } else {
         const novo = {
           id: Date.now(),
           nome,
-          cnh,
-          telefone,
-          status,
+          matricula,
+          dataNascimento,
+          filiacao1,
+          filiacao2,
           foto
         };
-        motoristas.push(novo);
+        alunos.push(novo);
       }
 
       persistir();
@@ -668,17 +661,17 @@
 
     // ===== Editar =====
     function editar(id) {
-      const motorista = motoristas.find(m => m.id === id);
-      if (motorista) abrirModal(motorista);
+      const aluno = alunos.find(a => a.id === id);
+      if (aluno) abrirModal(aluno);
     }
 
     // ===== Excluir =====
     function excluir(id) {
-      const motorista = motoristas.find(m => m.id === id);
-      if (!motorista) return;
+      const aluno = alunos.find(a => a.id === id);
+      if (!aluno) return;
 
-      if (confirm(`Deseja realmente excluir o motorista "${motorista.nome}"?`)) {
-        motoristas = motoristas.filter(m => m.id !== id);
+      if (confirm(`Deseja realmente excluir o aluno "${aluno.nome || 'Sem nome'}"?`)) {
+        alunos = alunos.filter(a => a.id !== id);
         persistir();
         render();
       }
@@ -686,22 +679,22 @@
 
     // ===== Impressão / PDF =====
     function imprimirTodos() {
-      if (motoristas.length === 0) {
-        alert('Não há motoristas cadastrados para imprimir.');
+      if (alunos.length === 0) {
+        alert('Não há alunos cadastrados para imprimir.');
         return;
       }
       filtroImpressao = null;
-      prepararImpressao('Relatório de Motoristas · Todos os registros');
+      prepararImpressao('Relatório de Alunos · Todos os registros');
       window.print();
       finalizarImpressao();
     }
 
     function imprimirUm(id) {
-      const motorista = motoristas.find(m => m.id === id);
-      if (!motorista) return;
+      const aluno = alunos.find(a => a.id === id);
+      if (!aluno) return;
 
       filtroImpressao = id;
-      prepararImpressao(`Relatório de Motorista · ${motorista.nome}`);
+      prepararImpressao(`Relatório de Aluno · ${aluno.nome || 'Sem nome'}`);
       render();
       window.print();
       finalizarImpressao();
@@ -714,11 +707,10 @@
       info.textContent = `${titulo} — Gerado em ${dataHora}`;
 
       const footer = document.getElementById('print-footer');
-      footer.textContent = `Documento gerado pelo TMS · Gerenciar Motoristas — ${dataHora}`;
+      footer.textContent = `Documento gerado pelo SGE · Gerenciar Alunos — ${dataHora}`;
     }
 
     function finalizarImpressao() {
-      // Restaura o estado normal após fechar o diálogo de impressão
       const info = document.getElementById('print-info');
       info.textContent = '';
 
@@ -730,7 +722,7 @@
 
     // ===== Utilidades =====
     function escapeHtml(str) {
-      return String(str)
+      return String(str || '')
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
