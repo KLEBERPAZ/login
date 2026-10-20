@@ -14,138 +14,197 @@
 
     body {
       min-height: 100vh;
-      background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
-      color: white;
-      padding: 2rem;
+      background-color: #f1f5f9;
+      color: #1e293b;
     }
 
-    .container {
-      max-width: 1300px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-    }
-
-    /* Header */
+    /* ===== HEADER (Estilo da Imagem) ===== */
     header {
+      background-color: #004a8d;
+      color: white;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
+      padding: 0.5rem 1.5rem;
+      font-size: 0.85rem;
+      border-bottom: 2px solid #003366;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .header-logo span { color: #ffcc00; }
+
+    .header-right {
+      display: flex;
+      align-items: center;
       gap: 1rem;
     }
 
-    h1 {
-      font-size: 2rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
+    .header-icons {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+    .header-icons svg { width: 18px; height: 18px; fill: currentColor; cursor: pointer; }
+
+    .header-user {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: white;
+      color: #1e293b;
+      padding: 0.3rem 0.75rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.8rem;
+    }
+    .header-user svg { width: 16px; height: 16px; }
+
+    /* ===== CONTAINER PRINCIPAL ===== */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
     }
 
-    h1 .destaque { color: #60a5fa; }
+    /* ===== GRADE DE CARDS (Estilo da Imagem) ===== */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
 
-    .btn {
-      border: none;
-      padding: 0.75rem 1.25rem;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-weight: 600;
+    .menu-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
       cursor: pointer;
       transition: all 0.2s;
-      display: inline-flex;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      min-height: 110px;
+      text-decoration: none;
+    }
+
+    .menu-card:hover {
+      border-color: #3b82f6;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+      transform: translateY(-2px);
+    }
+
+    /* Marca d'água sutil no fundo dos cards */
+    .menu-card::before {
+      content: '';
+      position: absolute;
+      top: -20px; right: -20px;
+      width: 180px; height: 180px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23cbd5e1'%3E%3Cpath d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+      opacity: 0.08;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .menu-card > * { position: relative; z-index: 1; }
+
+    .menu-card svg {
+      width: 28px;
+      height: 28px;
+      fill: #3b82f6;
+    }
+
+    .menu-card span {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #1e293b;
+      text-align: center;
+    }
+
+    /* ===== ÁREA DE FORMULÁRIO E TABELA ===== */
+    .section-card {
+      background: white;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      overflow: hidden;
+      display: none;
+    }
+    .section-card.active { display: block; }
+
+    .section-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f8fafc;
+    }
+
+    .section-header h2 {
+      font-size: 1.1rem;
+      color: #004a8d;
+      display: flex;
       align-items: center;
       gap: 0.5rem;
     }
 
-    .btn-primary { background: #3b82f6; color: white; }
-    .btn-primary:hover { background: #2563eb; }
-    .btn-danger { background: #ef4444; color: white; }
-    .btn-danger:hover { background: #dc2626; }
-    .btn-edit { background: #f59e0b; color: white; }
-    .btn-edit:hover { background: #d97706; }
-    .btn-secondary { background: #334155; color: white; }
-    .btn-secondary:hover { background: #475569; }
-    .btn-print { background: #10b981; color: white; }
-    .btn-print:hover { background: #059669; }
-    .btn-sm { padding: 0.4rem 0.7rem; font-size: 0.85rem; }
+    .section-body { padding: 1.5rem; }
 
-    /* Formulário em Blocos */
-    .form-card {
-      background: #1e293b;
-      border-radius: 12px;
-      padding: 2rem;
-      border: 1px solid #334155;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-
-    .form-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.5rem;
-      border-bottom: 1px solid #334155;
-      padding-bottom: 1rem;
-    }
-
-    .form-header h2 {
-      font-size: 1.25rem;
-      color: #60a5fa;
-    }
-
-    .form-section {
-      border-top: 1px solid #334155;
-      padding-top: 1.5rem;
-      margin-top: 1.5rem;
-    }
-    .form-section:first-of-type {
-      border-top: none;
-      margin-top: 0;
-      padding-top: 0;
-    }
-    .form-section-title {
-      font-size: 0.9rem;
-      color: #94a3b8;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
+    /* ===== FORMULÁRIO ===== */
     .form-grid {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
-      gap: 1.5rem;
+      gap: 1.25rem;
     }
 
     .col-12 { grid-column: span 12; }
     .col-6 { grid-column: span 6; }
     .col-4 { grid-column: span 4; }
     .col-3 { grid-column: span 3; }
-    .col-2 { grid-column: span 2; }
 
     .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
 
     .form-group label {
-      font-size: 0.85rem;
-      color: #cbd5e1;
-      font-weight: 500;
+      font-size: 0.8rem;
+      color: #475569;
+      font-weight: 600;
     }
 
     .form-group input,
     .form-group select {
       width: 100%;
-      padding: 0.7rem 0.9rem;
-      border-radius: 8px;
-      border: 1px solid #334155;
-      background: #0f172a;
-      color: white;
-      font-size: 0.95rem;
+      padding: 0.65rem 0.9rem;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      background: white;
+      color: #1e293b;
+      font-size: 0.9rem;
       outline: none;
       transition: border 0.2s;
     }
 
     .form-group input:focus,
-    .form-group select:focus { border-color: #3b82f6; }
+    .form-group select:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
 
     /* Upload de foto */
     .foto-upload {
@@ -155,17 +214,17 @@
     }
 
     .foto-preview {
-      width: 80px;
-      height: 80px;
+      width: 72px;
+      height: 72px;
       border-radius: 50%;
-      background: #0f172a;
-      border: 2px dashed #334155;
+      background: #f1f5f9;
+      border: 2px dashed #cbd5e1;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
       flex-shrink: 0;
-      color: #64748b;
+      color: #94a3b8;
       font-size: 1.5rem;
     }
 
@@ -181,28 +240,28 @@
       gap: 0.4rem;
     }
 
-    .foto-upload-actions label { margin-bottom: 0; }
     .foto-upload-actions input[type="file"] { display: none; }
 
     .btn-upload {
-      background: #334155;
-      color: white;
-      padding: 0.5rem 0.9rem;
-      border-radius: 8px;
-      font-size: 0.85rem;
+      background: #f1f5f9;
+      color: #1e293b;
+      padding: 0.45rem 0.9rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
       font-weight: 600;
       cursor: pointer;
       text-align: center;
+      border: 1px solid #cbd5e1;
       transition: background 0.2s;
     }
 
-    .btn-upload:hover { background: #475569; }
+    .btn-upload:hover { background: #e2e8f0; }
 
     .btn-remover-foto {
       background: transparent;
-      color: #fca5a5;
+      color: #ef4444;
       border: none;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       cursor: pointer;
       text-align: left;
       padding: 0.2rem 0;
@@ -213,31 +272,39 @@
     .form-actions {
       display: flex;
       justify-content: flex-end;
-      gap: 1rem;
-      margin-top: 2rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid #334155;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid #e2e8f0;
     }
 
-    /* Tabela */
-    .table-card {
-      background: #1e293b;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid #334155;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-
-    .table-header {
-      padding: 1.5rem;
-      border-bottom: 1px solid #334155;
-      display: flex;
-      justify-content: space-between;
+    /* ===== BOTÕES ===== */
+    .btn {
+      border: none;
+      padding: 0.65rem 1.25rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
       align-items: center;
+      gap: 0.4rem;
     }
 
-    .table-header h2 { font-size: 1.25rem; }
+    .btn-primary { background: #004a8d; color: white; }
+    .btn-primary:hover { background: #003366; }
+    .btn-secondary { background: #e2e8f0; color: #1e293b; }
+    .btn-secondary:hover { background: #cbd5e1; }
+    .btn-danger { background: #ef4444; color: white; }
+    .btn-danger:hover { background: #dc2626; }
+    .btn-edit { background: #f59e0b; color: white; }
+    .btn-edit:hover { background: #d97706; }
+    .btn-print { background: #10b981; color: white; }
+    .btn-print:hover { background: #059669; }
+    .btn-sm { padding: 0.35rem 0.65rem; font-size: 0.75rem; }
 
+    /* ===== TABELA ===== */
     .table-wrapper {
       overflow-x: auto;
     }
@@ -248,77 +315,81 @@
       white-space: nowrap;
     }
 
-    thead { background: #0f172a; }
+    thead { background: #f8fafc; }
 
     th, td {
-      padding: 1rem;
+      padding: 0.85rem 1rem;
       text-align: left;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
 
     th {
-      color: #94a3b8;
+      color: #64748b;
       font-weight: 600;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
+      border-bottom: 1px solid #e2e8f0;
     }
 
     tbody tr {
-      border-top: 1px solid #334155;
+      border-bottom: 1px solid #e2e8f0;
       transition: background 0.2s;
     }
 
-    tbody tr:hover { background: #293548; }
+    tbody tr:hover { background: #f8fafc; }
 
     .empty {
       padding: 3rem;
       text-align: center;
-      color: #64748b;
+      color: #94a3b8;
     }
 
-    .actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .actions { display: flex; gap: 0.4rem; flex-wrap: wrap; }
 
-    /* Avatar */
     .avatar {
-      width: 42px;
-      height: 42px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid #334155;
+      border: 2px solid #e2e8f0;
       display: block;
     }
 
     .avatar-initials {
-      width: 42px;
-      height: 42px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       color: white;
-      border: 2px solid #334155;
+      border: 2px solid #e2e8f0;
     }
 
-    @media (max-width: 900px) {
-      .col-6, .col-4, .col-3, .col-2 { grid-column: span 12; }
-      th, td { padding: 0.7rem 0.5rem; font-size: 0.8rem; }
-      .actions { flex-direction: column; }
+    /* Responsividade */
+    @media (max-width: 1024px) {
+      .menu-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .menu-grid { grid-template-columns: 1fr; }
+      .col-6, .col-4, .col-3 { grid-column: span 12; }
+      .header-right { display: none; }
     }
 
     /* ===== CSS de impressão ===== */
     @media print {
       @page { size: A4 landscape; margin: 1cm; }
       body { background: white !important; color: #111 !important; padding: 0 !important; }
-      .container { max-width: 100%; gap: 0; }
-      header, .form-card, .actions, .btn, .table-header .btn { display: none !important; }
-
+      header, .menu-grid, .form-card, .actions, .btn, .section-header .btn { display: none !important; }
+      .container { max-width: 100%; padding: 0; gap: 0; }
+      .section-card { display: block !important; border: none !important; box-shadow: none !important; }
+      .section-header { display: none !important; }
       .print-info { display: block !important; font-size: 0.8rem; color: #555; margin-bottom: 1rem; border-bottom: 1px solid #999; padding-bottom: 0.5rem;}
 
-      .table-card { border: 1px solid #999 !important; box-shadow: none !important; border-radius: 0 !important; }
-      .table-header { display: none !important; } /* Esconde o título da tabela se quiser, ou deixe visível */
       thead { background: #f1f5f9 !important; }
       th, td {
         color: #111 !important;
@@ -333,41 +404,73 @@
         width: 30px !important; height: 30px !important; font-size: 0.65rem !important;
         border: 1px solid #999 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
       }
-      th:last-child, td:last-child { display: none !important; } /* Esconde Ações */
+      th:last-child, td:last-child { display: none !important; }
     }
     .print-info { display: none; }
   </style>
 </head>
 <body>
-  <div class="container">
 
-    <header>
-      <h1>SGE · <span class="destaque">Alunos</span></h1>
-      <div class="header-actions">
-        <button class="btn btn-print" onclick="imprimirTodos()">🖨️ Imprimir Lista PDF</button>
+  <!-- HEADER ESTILO IMAGEM -->
+  <header>
+    <div class="header-logo">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="white"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      SGE <span>+</span> <span style="font-size:0.7rem; font-weight:400; opacity:0.8;">SISTEMA DE GESTÃO ESCOLAR</span>
+    </div>
+    <div class="header-right">
+      <div class="header-icons">
+        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
       </div>
-    </header>
+      <div class="header-user">
+        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+        KLEBER
+      </div>
+      <div style="background:white; color:#1e293b; padding:0.3rem 0.75rem; border-radius:4px; font-weight:600; font-size:0.8rem;">2026</div>
+    </div>
+  </header>
+
+  <div class="container">
 
     <div class="print-info" id="print-info"></div>
 
-    <!-- FORMULÁRIO DE CADASTRO -->
-    <div class="form-card">
-      <div class="form-header">
-        <h2 id="form-title">Novo Cadastro de Aluno</h2>
-        <button class="btn btn-secondary btn-sm" id="btn-cancelar-edicao" style="display:none;" onclick="cancelarEdicao()">Cancelar Edição</button>
+    <!-- GRADE DE CARDS (MENU) -->
+    <div class="menu-grid">
+
+      <!-- Card 1: Redireciona para Unit3 -->
+      <a href="Unit3.html" class="menu-card">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
+        <span>Cadastrar Aluno</span>
+      </a>
+
+      <!-- Card 2: Ver Tabela (Lista de Alunos) -->
+      <div class="menu-card" onclick="toggleSecao('table-section')">
+        <svg viewBox="0 0 24 24"><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+        <span>Lista de Alunos</span>
       </div>
 
-      <form id="form-aluno" onsubmit="salvar(event)">
-        <input type="hidden" id="aluno-id">
-        <input type="hidden" id="foto-base64">
+      <!-- Card 3: Imprimir Tudo -->
+      <div class="menu-card" onclick="imprimirTodos()">
+        <svg viewBox="0 0 24 24"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+        <span>Imprimir Relatório</span>
+      </div>
+    </div>
 
-        <!-- BLOCO 1: DADOS PESSOAIS -->
-        <div class="form-section">
-          <div class="form-section-title">1. Dados Pessoais e Filiação</div>
+    <!-- SEÇÃO: FORMULÁRIO DE CADASTRO (Abre ao clicar em Editar na tabela) -->
+    <div class="section-card" id="form-section">
+      <div class="section-header">
+        <h2 id="form-title">Editar Cadastro de Aluno</h2>
+        <button class="btn btn-secondary btn-sm" id="btn-cancelar-edicao" style="display:none;" onclick="cancelarEdicao()">Cancelar Edição</button>
+      </div>
+      <div class="section-body">
+        <form id="form-aluno" onsubmit="salvar(event)">
+          <input type="hidden" id="aluno-id">
+          <input type="hidden" id="foto-base64">
+
           <div class="form-grid">
-
+            <!-- Foto -->
             <div class="col-12" style="margin-bottom: 0.5rem;">
-              <label style="font-size:0.85rem; color:#cbd5e1; font-weight:500; margin-bottom:0.4rem; display:block;">Foto do Aluno</label>
+              <label style="font-size:0.8rem; color:#475569; font-weight:600; margin-bottom:0.4rem; display:block;">Foto do Aluno</label>
               <div class="foto-upload">
                 <div class="foto-preview" id="foto-preview">👤</div>
                 <div class="foto-upload-actions">
@@ -378,6 +481,7 @@
               </div>
             </div>
 
+            <!-- Dados Pessoais -->
             <div class="form-group col-6">
               <label>Nome Completo</label>
               <input type="text" id="nome" placeholder="Ex: Maria Oliveira">
@@ -429,13 +533,7 @@
               <input type="text" id="filiacao2" placeholder="Nome do pai (opcional)">
             </div>
 
-          </div>
-        </div>
-
-        <!-- BLOCO 2: NATURALIDADE E CONTATO -->
-        <div class="form-section">
-          <div class="form-section-title">2. Origem e Contato</div>
-          <div class="form-grid">
+            <!-- Origem e Contato -->
             <div class="form-group col-3">
               <label>Estado (UF)</label>
               <select id="estado">
@@ -482,20 +580,20 @@
               <input type="tel" id="telefoneResidencial" placeholder="(XX) XXXX-XXXX">
             </div>
           </div>
-        </div>
 
-        <div class="form-actions">
-          <button type="button" class="btn btn-secondary" onclick="cancelarEdicao()">Limpar</button>
-          <button type="submit" class="btn btn-primary" id="btn-salvar">Salvar Aluno</button>
-        </div>
-      </form>
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" onclick="cancelarEdicao()">Limpar</button>
+            <button type="submit" class="btn btn-primary" id="btn-salvar">Atualizar Cadastro</button>
+          </div>
+        </form>
+      </div>
     </div>
 
-    <!-- TABELA DE ALUNOS -->
-    <div class="table-card">
-      <div class="table-header">
+    <!-- SEÇÃO: TABELA DE ALUNOS -->
+    <div class="section-card" id="table-section">
+      <div class="section-header">
         <h2>Alunos Cadastrados</h2>
-        <span id="contador-alunos" style="font-size: 0.9rem; color: #94a3b8;">0 registros</span>
+        <span id="contador-alunos" style="font-size: 0.85rem; color: #64748b; font-weight: 600;">0 registros</span>
       </div>
       <div class="table-wrapper">
         <table>
@@ -529,6 +627,24 @@
     let alunos = JSON.parse(localStorage.getItem('sge_alunos')) || [];
     let editandoId = null;
     let filtroImpressao = null;
+
+    // ===== Controle de Seções =====
+    function toggleSecao(id) {
+      const secao = document.getElementById(id);
+      const isActive = secao.classList.contains('active');
+
+      document.querySelectorAll('.section-card').forEach(el => el.classList.remove('active'));
+
+      if (!isActive) {
+        secao.classList.add('active');
+        if (id === 'table-section') {
+          setTimeout(() => secao.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+        } else {
+          // Se for o formulário, rola para o topo
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }
+    }
 
     // ===== Persistência =====
     function persistir() {
@@ -632,9 +748,12 @@
       atualizarPreview(null);
       editandoId = null;
 
-      document.getElementById('form-title').textContent = 'Novo Cadastro de Aluno';
-      document.getElementById('btn-salvar').textContent = 'Salvar Aluno';
+      document.getElementById('form-title').textContent = 'Editar Cadastro de Aluno';
+      document.getElementById('btn-salvar').textContent = 'Atualizar Cadastro';
       document.getElementById('btn-cancelar-edicao').style.display = 'none';
+
+      // Fecha o formulário após limpar
+      document.getElementById('form-section').classList.remove('active');
     }
 
     // ===== Foto =====
@@ -665,152 +784,4 @@
 
     function atualizarPreview(base64) {
       const preview = document.getElementById('foto-preview');
-      const btnRemover = document.getElementById('btn-remover-foto');
-
-      if (base64) {
-        preview.innerHTML = `<img src="${base64}" alt="Pré-visualização">`;
-        btnRemover.style.display = 'block';
-      } else {
-        preview.innerHTML = '👤';
-        btnRemover.style.display = 'none';
-      }
-    }
-
-    function removerFoto() {
-      document.getElementById('foto-base64').value = '';
-      document.getElementById('foto-input').value = '';
-      atualizarPreview(null);
-    }
-
-    // ===== Máscaras de Telefone =====
-    function mascaraTelefone(input) {
-      input.addEventListener('input', function(e) {
-        let v = e.target.value.replace(/\D/g, '');
-        if (v.length > 11) v = v.slice(0, 11);
-        if (v.length > 0) {
-          v = v.replace(/^(\d{2})(\d)/g, '($1) $2');
-          v = v.replace(/(\d)(\d{4})$/, '$1-$2');
-        }
-        e.target.value = v;
-      });
-    }
-    mascaraTelefone(document.getElementById('telefoneCelular'));
-    mascaraTelefone(document.getElementById('telefoneResidencial'));
-
-    // ===== Criar / Atualizar =====
-    function salvar(event) {
-      event.preventDefault();
-
-      const nome = document.getElementById('nome').value.trim();
-      const matricula = document.getElementById('matricula').value.trim();
-      const dataNascimento = document.getElementById('dataNascimento').value;
-      const sexo = document.getElementById('sexo').value;
-      const raca = document.getElementById('raca').value;
-      const nacionalidade = document.getElementById('nacionalidade').value;
-      const filiacao1 = document.getElementById('filiacao1').value.trim();
-      const filiacao2 = document.getElementById('filiacao2').value.trim();
-      const estado = document.getElementById('estado').value;
-      const municipio = document.getElementById('municipio').value.trim();
-      const telefoneCelular = document.getElementById('telefoneCelular').value.trim();
-      const telefoneResidencial = document.getElementById('telefoneResidencial').value.trim();
-      const foto = document.getElementById('foto-base64').value;
-
-      if (editandoId) {
-        alunos = alunos.map(a =>
-          a.id === editandoId ? { ...a, nome, matricula, dataNascimento, sexo, raca, nacionalidade, filiacao1, filiacao2, estado, municipio, telefoneCelular, telefoneResidencial, foto } : a
-        );
-      } else {
-        const novo = {
-          id: Date.now(),
-          nome, matricula, dataNascimento, sexo, raca, nacionalidade, filiacao1, filiacao2, estado, municipio, telefoneCelular, telefoneResidencial, foto
-        };
-        alunos.push(novo);
-      }
-
-      persistir();
-      render();
-      cancelarEdicao();
-    }
-
-    // ===== Editar =====
-    function editar(id) {
-      const aluno = alunos.find(a => a.id === id);
-      if (aluno) {
-        editandoId = aluno.id;
-        preencherFormulario(aluno);
-
-        document.getElementById('form-title').textContent = 'Editando Aluno';
-        document.getElementById('btn-salvar').textContent = 'Atualizar Cadastro';
-        document.getElementById('btn-cancelar-edicao').style.display = 'inline-block';
-
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    }
-
-    // ===== Excluir =====
-    function excluir(id) {
-      const aluno = alunos.find(a => a.id === id);
-      if (!aluno) return;
-
-      if (confirm(`Deseja realmente excluir o aluno "${aluno.nome || 'Sem nome'}"?`)) {
-        alunos = alunos.filter(a => a.id !== id);
-        persistir();
-        render();
-      }
-    }
-
-    // ===== Impressão / PDF =====
-    function imprimirTodos() {
-      if (alunos.length === 0) {
-        alert('Não há alunos cadastrados para imprimir.');
-        return;
-      }
-      filtroImpressao = null;
-      prepararImpressao('Relatório de Alunos · Todos os registros');
-      window.print();
-      finalizarImpressao();
-    }
-
-    function imprimirUm(id) {
-      const aluno = alunos.find(a => a.id === id);
-      if (!aluno) return;
-
-      filtroImpressao = id;
-      prepararImpressao(`Relatório de Aluno · ${aluno.nome || 'Sem nome'}`);
-      render();
-      window.print();
-      finalizarImpressao();
-    }
-
-    function prepararImpressao(titulo) {
-      const agora = new Date();
-      const dataHora = agora.toLocaleString('pt-BR');
-      const info = document.getElementById('print-info');
-      info.textContent = `${titulo} — Gerado em ${dataHora}`;
-    }
-
-    function finalizarImpressao() {
-      const info = document.getElementById('print-info');
-      info.textContent = '';
-
-      if (filtroImpressao !== null) {
-        filtroImpressao = null;
-        render();
-      }
-    }
-
-    // ===== Utilidades =====
-    function escapeHtml(str) {
-      return String(str || '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-    }
-
-    // ===== Init =====
-    render();
-  </script>
-</body>
-</html>
+      const btnRemover = document.getElementById('btn-remover-foto
