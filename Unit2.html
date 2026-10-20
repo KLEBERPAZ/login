@@ -20,23 +20,20 @@
     }
 
     .container {
-      max-width: 1100px;
+      max-width: 1300px;
       margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
     }
 
+    /* Header */
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 2rem;
       flex-wrap: wrap;
       gap: 1rem;
-    }
-
-    .header-actions {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
     }
 
     h1 {
@@ -45,9 +42,7 @@
       letter-spacing: -0.03em;
     }
 
-    h1 .destaque {
-      color: #60a5fa;
-    }
+    h1 .destaque { color: #60a5fa; }
 
     .btn {
       border: none;
@@ -64,129 +59,74 @@
 
     .btn-primary { background: #3b82f6; color: white; }
     .btn-primary:hover { background: #2563eb; }
-
     .btn-danger { background: #ef4444; color: white; }
     .btn-danger:hover { background: #dc2626; }
-
     .btn-edit { background: #f59e0b; color: white; }
     .btn-edit:hover { background: #d97706; }
-
     .btn-secondary { background: #334155; color: white; }
     .btn-secondary:hover { background: #475569; }
-
     .btn-print { background: #10b981; color: white; }
     .btn-print:hover { background: #059669; }
+    .btn-sm { padding: 0.4rem 0.7rem; font-size: 0.85rem; }
 
-    .btn-sm {
-      padding: 0.4rem 0.7rem;
-      font-size: 0.85rem;
-    }
-
-    /* Tabela */
-    .table-wrapper {
+    /* Formulário em Blocos */
+    .form-card {
       background: #1e293b;
       border-radius: 12px;
-      overflow-x: auto;
+      padding: 2rem;
       border: 1px solid #334155;
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      white-space: nowrap;
+    .form-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 1rem;
     }
 
-    thead { background: #0f172a; }
-
-    th, td {
-      padding: 1rem;
-      text-align: left;
-      font-size: 0.95rem;
+    .form-header h2 {
+      font-size: 1.25rem;
+      color: #60a5fa;
     }
 
-    th {
+    .form-section {
+      border-top: 1px solid #334155;
+      padding-top: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .form-section:first-of-type {
+      border-top: none;
+      margin-top: 0;
+      padding-top: 0;
+    }
+    .form-section-title {
+      font-size: 0.9rem;
       color: #94a3b8;
-      font-weight: 600;
-      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
 
-    tbody tr {
-      border-top: 1px solid #334155;
-      transition: background 0.2s;
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 1.5rem;
     }
 
-    tbody tr:hover { background: #293548; }
+    .col-12 { grid-column: span 12; }
+    .col-6 { grid-column: span 6; }
+    .col-4 { grid-column: span 4; }
+    .col-3 { grid-column: span 3; }
+    .col-2 { grid-column: span 2; }
 
-    .empty {
-      padding: 3rem;
-      text-align: center;
-      color: #64748b;
-    }
-
-    .actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-
-    /* Avatar */
-    .avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid #334155;
-      display: block;
-    }
-
-    .avatar-initials {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 0.95rem;
-      color: white;
-      border: 2px solid #334155;
-    }
-
-    /* Modal */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.7);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-      z-index: 100;
-    }
-
-    .modal-overlay.active { display: flex; }
-
-    .modal {
-      background: #1e293b;
-      border-radius: 12px;
-      padding: 2rem;
-      width: 100%;
-      max-width: 500px;
-      border: 1px solid #334155;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-
-    .modal h2 {
-      font-size: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .form-group { margin-bottom: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
 
     .form-group label {
-      display: block;
-      margin-bottom: 0.4rem;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       color: #cbd5e1;
       font-weight: 500;
     }
@@ -215,8 +155,8 @@
     }
 
     .foto-preview {
-      width: 72px;
-      height: 72px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
       background: #0f172a;
       border: 2px dashed #334155;
@@ -270,205 +210,318 @@
 
     .btn-remover-foto:hover { text-decoration: underline; }
 
-    .modal-actions {
+    .form-actions {
       display: flex;
       justify-content: flex-end;
-      gap: 0.5rem;
-      margin-top: 1.5rem;
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #334155;
     }
 
-    @media (max-width: 640px) {
-      h1 { font-size: 1.5rem; }
-      th, td { padding: 0.7rem 0.5rem; font-size: 0.85rem; }
+    /* Tabela */
+    .table-card {
+      background: #1e293b;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #334155;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .table-header {
+      padding: 1.5rem;
+      border-bottom: 1px solid #334155;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .table-header h2 { font-size: 1.25rem; }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      white-space: nowrap;
+    }
+
+    thead { background: #0f172a; }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    th {
+      color: #94a3b8;
+      font-weight: 600;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    tbody tr {
+      border-top: 1px solid #334155;
+      transition: background 0.2s;
+    }
+
+    tbody tr:hover { background: #293548; }
+
+    .empty {
+      padding: 3rem;
+      text-align: center;
+      color: #64748b;
+    }
+
+    .actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+    /* Avatar */
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #334155;
+      display: block;
+    }
+
+    .avatar-initials {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: white;
+      border: 2px solid #334155;
+    }
+
+    @media (max-width: 900px) {
+      .col-6, .col-4, .col-3, .col-2 { grid-column: span 12; }
+      th, td { padding: 0.7rem 0.5rem; font-size: 0.8rem; }
       .actions { flex-direction: column; }
     }
 
     /* ===== CSS de impressão ===== */
     @media print {
-      @page {
-        size: A4 landscape; /* Melhor para caber mais colunas */
-        margin: 1cm;
-      }
+      @page { size: A4 landscape; margin: 1cm; }
+      body { background: white !important; color: #111 !important; padding: 0 !important; }
+      .container { max-width: 100%; gap: 0; }
+      header, .form-card, .actions, .btn, .table-header .btn { display: none !important; }
 
-      body {
-        background: white !important;
-        color: #111 !important;
-        padding: 0 !important;
-      }
+      .print-info { display: block !important; font-size: 0.8rem; color: #555; margin-bottom: 1rem; border-bottom: 1px solid #999; padding-bottom: 0.5rem;}
 
-      .container { max-width: 100%; }
-
-      header {
-        display: block;
-        margin-bottom: 1rem;
-        border-bottom: 2px solid #111;
-        padding-bottom: 0.75rem;
-      }
-
-      h1 {
-        font-size: 1.4rem;
-        color: #111 !important;
-        margin-bottom: 0.25rem;
-      }
-
-      h1 .destaque { color: #2563eb !important; }
-
-      .header-actions,
-      .actions,
-      .btn { display: none !important; }
-
-      .print-info {
-        display: block !important;
-        font-size: 0.8rem;
-        color: #555;
-        margin-top: 0.5rem;
-      }
-
-      .table-wrapper {
-        background: white !important;
-        border: 1px solid #999 !important;
-        box-shadow: none !important;
-        border-radius: 0 !important;
-        overflow: visible !important;
-      }
-
-      table { width: 100%; }
-
+      .table-card { border: 1px solid #999 !important; box-shadow: none !important; border-radius: 0 !important; }
+      .table-header { display: none !important; } /* Esconde o título da tabela se quiser, ou deixe visível */
       thead { background: #f1f5f9 !important; }
-
       th, td {
         color: #111 !important;
         border: 1px solid #ccc !important;
-        padding: 0.5rem !important;
-        font-size: 0.8rem !important;
+        padding: 0.4rem !important;
+        font-size: 0.75rem !important;
         white-space: normal;
       }
-
-      th {
-        background: #e2e8f0 !important;
-        font-size: 0.75rem !important;
-      }
-
+      th { background: #e2e8f0 !important; font-size: 0.7rem !important; }
       tbody tr:hover { background: transparent !important; }
-
-      .avatar {
-        width: 36px !important;
-        height: 36px !important;
-        border: 1px solid #999 !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
+      .avatar, .avatar-initials {
+        width: 30px !important; height: 30px !important; font-size: 0.65rem !important;
+        border: 1px solid #999 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
       }
-
-      .avatar-initials {
-        width: 36px !important;
-        height: 36px !important;
-        font-size: 0.75rem !important;
-        border: 1px solid #999 !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-      }
-
-      .empty { color: #555 !important; }
-
-      /* Esconde coluna de ações na impressão */
-      th:last-child,
-      td:last-child { display: none !important; }
-
-      .print-footer {
-        display: block !important;
-        margin-top: 1.5rem;
-        padding-top: 0.75rem;
-        border-top: 1px solid #999;
-        font-size: 0.75rem;
-        color: #555;
-        text-align: center;
-      }
+      th:last-child, td:last-child { display: none !important; } /* Esconde Ações */
     }
-
-    .print-info,
-    .print-footer { display: none; }
+    .print-info { display: none; }
   </style>
 </head>
 <body>
   <div class="container">
+
     <header>
       <h1>SGE · <span class="destaque">Alunos</span></h1>
       <div class="header-actions">
-        <button class="btn btn-print" onclick="imprimirTodos()">🖨️ Imprimir PDF</button>
-        <button class="btn btn-primary" onclick="abrirModal()">➕ Novo Aluno</button>
+        <button class="btn btn-print" onclick="imprimirTodos()">🖨️ Imprimir Lista PDF</button>
       </div>
-      <div class="print-info" id="print-info"></div>
     </header>
 
-    <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr>
-            <th>Foto</th>
-            <th>Nome Completo</th>
-            <th>Matrícula SGE</th>
-            <th>Nascimento</th>
-            <th>Filiação 1</th>
-            <th>Filiação 2</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody id="tabela-body"></tbody>
-      </table>
-    </div>
+    <div class="print-info" id="print-info"></div>
 
-    <div class="print-footer" id="print-footer">
-      Documento gerado pelo SGE · Gerenciar Alunos
-    </div>
-  </div>
+    <!-- FORMULÁRIO DE CADASTRO -->
+    <div class="form-card">
+      <div class="form-header">
+        <h2 id="form-title">Novo Cadastro de Aluno</h2>
+        <button class="btn btn-secondary btn-sm" id="btn-cancelar-edicao" style="display:none;" onclick="cancelarEdicao()">Cancelar Edição</button>
+      </div>
 
-  <!-- Modal -->
-  <div class="modal-overlay" id="modal">
-    <div class="modal">
-      <h2 id="modal-title">Novo Aluno</h2>
       <form id="form-aluno" onsubmit="salvar(event)">
         <input type="hidden" id="aluno-id">
         <input type="hidden" id="foto-base64">
 
-        <div class="form-group">
-          <label>Foto do Aluno</label>
-          <div class="foto-upload">
-            <div class="foto-preview" id="foto-preview">👤</div>
-            <div class="foto-upload-actions">
-              <label for="foto-input" class="btn-upload">📷 Escolher foto</label>
-              <input type="file" id="foto-input" accept="image/*" onchange="processarFoto(event)">
-              <button type="button" class="btn-remover-foto" id="btn-remover-foto" onclick="removerFoto()" style="display:none;">Remover foto</button>
+        <!-- BLOCO 1: DADOS PESSOAIS -->
+        <div class="form-section">
+          <div class="form-section-title">1. Dados Pessoais e Filiação</div>
+          <div class="form-grid">
+
+            <div class="col-12" style="margin-bottom: 0.5rem;">
+              <label style="font-size:0.85rem; color:#cbd5e1; font-weight:500; margin-bottom:0.4rem; display:block;">Foto do Aluno</label>
+              <div class="foto-upload">
+                <div class="foto-preview" id="foto-preview">👤</div>
+                <div class="foto-upload-actions">
+                  <label for="foto-input" class="btn-upload">📷 Escolher foto</label>
+                  <input type="file" id="foto-input" accept="image/*" onchange="processarFoto(event)">
+                  <button type="button" class="btn-remover-foto" id="btn-remover-foto" onclick="removerFoto()" style="display:none;">Remover foto</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group col-6">
+              <label>Nome Completo</label>
+              <input type="text" id="nome" placeholder="Ex: Maria Oliveira">
+            </div>
+            <div class="form-group col-3">
+              <label>Matrícula SGE</label>
+              <input type="text" id="matricula" placeholder="Ex: 2024001">
+            </div>
+            <div class="form-group col-3">
+              <label>Data de Nascimento</label>
+              <input type="date" id="dataNascimento">
+            </div>
+
+            <div class="form-group col-4">
+              <label>Sexo</label>
+              <select id="sexo">
+                <option value="">Não informado</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Feminino">Feminino</option>
+                <option value="Outro">Outro</option>
+              </select>
+            </div>
+            <div class="form-group col-4">
+              <label>Cor ou Raça</label>
+              <select id="raca">
+                <option value="">Não informado</option>
+                <option value="Branca">Branca</option>
+                <option value="Preta">Preta</option>
+                <option value="Parda">Parda</option>
+                <option value="Amarela">Amarela</option>
+                <option value="Indígena">Indígena</option>
+                <option value="Não declarada">Não declarada</option>
+              </select>
+            </div>
+            <div class="form-group col-4">
+              <label>Nacionalidade</label>
+              <select id="nacionalidade">
+                <option value="Brasileira">Brasileira</option>
+                <option value="Estrangeira">Estrangeira</option>
+              </select>
+            </div>
+
+            <div class="form-group col-6">
+              <label>Filiação 1 (Mãe)</label>
+              <input type="text" id="filiacao1" placeholder="Nome da mãe">
+            </div>
+            <div class="form-group col-6">
+              <label>Filiação 2 (Pai)</label>
+              <input type="text" id="filiacao2" placeholder="Nome do pai (opcional)">
+            </div>
+
+          </div>
+        </div>
+
+        <!-- BLOCO 2: NATURALIDADE E CONTATO -->
+        <div class="form-section">
+          <div class="form-section-title">2. Origem e Contato</div>
+          <div class="form-grid">
+            <div class="form-group col-3">
+              <label>Estado (UF)</label>
+              <select id="estado">
+                <option value="">Selecione...</option>
+                <option value="AC">Acre</option>
+                <option value="AL">Alagoas</option>
+                <option value="AP">Amapá</option>
+                <option value="AM">Amazonas</option>
+                <option value="BA">Bahia</option>
+                <option value="CE">Ceará</option>
+                <option value="DF">Distrito Federal</option>
+                <option value="ES">Espírito Santo</option>
+                <option value="GO">Goiás</option>
+                <option value="MA">Maranhão</option>
+                <option value="MT">Mato Grosso</option>
+                <option value="MS">Mato Grosso do Sul</option>
+                <option value="MG">Minas Gerais</option>
+                <option value="PA">Pará</option>
+                <option value="PB">Paraíba</option>
+                <option value="PR">Paraná</option>
+                <option value="PE">Pernambuco</option>
+                <option value="PI">Piauí</option>
+                <option value="RJ">Rio de Janeiro</option>
+                <option value="RN">Rio Grande do Norte</option>
+                <option value="RS">Rio Grande do Sul</option>
+                <option value="RO">Rondônia</option>
+                <option value="RR">Roraima</option>
+                <option value="SC">Santa Catarina</option>
+                <option value="SP">São Paulo</option>
+                <option value="SE">Sergipe</option>
+                <option value="TO">Tocantins</option>
+              </select>
+            </div>
+            <div class="form-group col-3">
+              <label>Município (Nascimento)</label>
+              <input type="text" id="municipio" placeholder="Ex: São Paulo">
+            </div>
+            <div class="form-group col-3">
+              <label>Telefone Celular</label>
+              <input type="tel" id="telefoneCelular" placeholder="(XX) XXXXX-XXXX">
+            </div>
+            <div class="form-group col-3">
+              <label>Telefone Residencial</label>
+              <input type="tel" id="telefoneResidencial" placeholder="(XX) XXXX-XXXX">
             </div>
           </div>
         </div>
 
-        <div class="form-group">
-          <label>Nome Completo</label>
-          <input type="text" id="nome" placeholder="Ex: Maria Oliveira">
-        </div>
-        <div class="form-group">
-          <label>Matrícula SGE</label>
-          <input type="text" id="matricula" placeholder="Ex: 2024001">
-        </div>
-        <div class="form-group">
-          <label>Data de Nascimento</label>
-          <input type="date" id="dataNascimento">
-        </div>
-        <div class="form-group">
-          <label>Filiação 1 (Mãe)</label>
-          <input type="text" id="filiacao1" placeholder="Nome da mãe">
-        </div>
-        <div class="form-group">
-          <label>Filiação 2 (Pai)</label>
-          <input type="text" id="filiacao2" placeholder="Nome do pai (opcional)">
-        </div>
-
-        <div class="modal-actions">
-          <button type="button" class="btn btn-secondary" onclick="fecharModal()">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Salvar</button>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" onclick="cancelarEdicao()">Limpar</button>
+          <button type="submit" class="btn btn-primary" id="btn-salvar">Salvar Aluno</button>
         </div>
       </form>
     </div>
+
+    <!-- TABELA DE ALUNOS -->
+    <div class="table-card">
+      <div class="table-header">
+        <h2>Alunos Cadastrados</h2>
+        <span id="contador-alunos" style="font-size: 0.9rem; color: #94a3b8;">0 registros</span>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Foto</th>
+              <th>Nome Completo</th>
+              <th>Matrícula</th>
+              <th>Nasc.</th>
+              <th>Sexo</th>
+              <th>Raça</th>
+              <th>Nacionalidade</th>
+              <th>Estado</th>
+              <th>Município</th>
+              <th>Filiação 1</th>
+              <th>Filiação 2</th>
+              <th>Celular</th>
+              <th>Residencial</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-body"></tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 
   <script>
@@ -489,12 +542,13 @@
     // ===== Render Tabela =====
     function render() {
       const tbody = document.getElementById('tabela-body');
-      const lista = filtroImpressao
-        ? alunos.filter(a => a.id === filtroImpressao)
-        : alunos;
+      const contador = document.getElementById('contador-alunos');
+      const lista = filtroImpressao ? alunos.filter(a => a.id === filtroImpressao) : alunos;
+
+      contador.textContent = `${lista.length} registro(s)`;
 
       if (lista.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="empty">Nenhum aluno cadastrado ainda. Clique em "Novo Aluno" para começar.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="14" class="empty">Nenhum aluno cadastrado ainda.</td></tr>`;
         return;
       }
 
@@ -504,8 +558,15 @@
           <td>${escapeHtml(a.nome) || 'Sem nome'}</td>
           <td>${escapeHtml(a.matricula) || '-'}</td>
           <td>${a.dataNascimento ? formatarData(a.dataNascimento) : '-'}</td>
+          <td>${escapeHtml(a.sexo) || '-'}</td>
+          <td>${escapeHtml(a.raca) || '-'}</td>
+          <td>${escapeHtml(a.nacionalidade) || '-'}</td>
+          <td>${escapeHtml(a.estado) || '-'}</td>
+          <td>${escapeHtml(a.municipio) || '-'}</td>
           <td>${escapeHtml(a.filiacao1) || '-'}</td>
           <td>${escapeHtml(a.filiacao2) || '-'}</td>
+          <td>${escapeHtml(a.telefoneCelular) || '-'}</td>
+          <td>${escapeHtml(a.telefoneResidencial) || '-'}</td>
           <td>
             <div class="actions">
               <button class="btn btn-edit btn-sm" onclick="editar(${a.id})">✏️ Editar</button>
@@ -545,40 +606,35 @@
       return `${dia}/${mes}/${ano}`;
     }
 
-    // ===== Modal =====
-    function abrirModal(aluno = null) {
-      const modal = document.getElementById('modal');
-      const title = document.getElementById('modal-title');
-
-      if (aluno) {
-        title.textContent = 'Editar Aluno';
-        document.getElementById('aluno-id').value = aluno.id;
-        document.getElementById('nome').value = aluno.nome || '';
-        document.getElementById('matricula').value = aluno.matricula || '';
-        document.getElementById('dataNascimento').value = aluno.dataNascimento || '';
-        document.getElementById('filiacao1').value = aluno.filiacao1 || '';
-        document.getElementById('filiacao2').value = aluno.filiacao2 || '';
-        document.getElementById('foto-base64').value = aluno.foto || '';
-        atualizarPreview(aluno.foto || null);
-        editandoId = aluno.id;
-      } else {
-        title.textContent = 'Novo Aluno';
-        document.getElementById('form-aluno').reset();
-        document.getElementById('aluno-id').value = '';
-        document.getElementById('foto-base64').value = '';
-        atualizarPreview(null);
-        editandoId = null;
-      }
-
-      modal.classList.add('active');
+    // ===== Formulário =====
+    function preencherFormulario(aluno) {
+      document.getElementById('aluno-id').value = aluno.id;
+      document.getElementById('nome').value = aluno.nome || '';
+      document.getElementById('matricula').value = aluno.matricula || '';
+      document.getElementById('dataNascimento').value = aluno.dataNascimento || '';
+      document.getElementById('sexo').value = aluno.sexo || '';
+      document.getElementById('raca').value = aluno.raca || '';
+      document.getElementById('nacionalidade').value = aluno.nacionalidade || 'Brasileira';
+      document.getElementById('filiacao1').value = aluno.filiacao1 || '';
+      document.getElementById('filiacao2').value = aluno.filiacao2 || '';
+      document.getElementById('estado').value = aluno.estado || '';
+      document.getElementById('municipio').value = aluno.municipio || '';
+      document.getElementById('telefoneCelular').value = aluno.telefoneCelular || '';
+      document.getElementById('telefoneResidencial').value = aluno.telefoneResidencial || '';
+      document.getElementById('foto-base64').value = aluno.foto || '';
+      atualizarPreview(aluno.foto || null);
     }
 
-    function fecharModal() {
-      document.getElementById('modal').classList.remove('active');
+    function cancelarEdicao() {
       document.getElementById('form-aluno').reset();
+      document.getElementById('aluno-id').value = '';
       document.getElementById('foto-base64').value = '';
       atualizarPreview(null);
       editandoId = null;
+
+      document.getElementById('form-title').textContent = 'Novo Cadastro de Aluno';
+      document.getElementById('btn-salvar').textContent = 'Salvar Aluno';
+      document.getElementById('btn-cancelar-edicao').style.display = 'none';
     }
 
     // ===== Foto =====
@@ -626,43 +682,69 @@
       atualizarPreview(null);
     }
 
-    // ===== Criar / Atualizar (Sem obrigatoriedade) =====
+    // ===== Máscaras de Telefone =====
+    function mascaraTelefone(input) {
+      input.addEventListener('input', function(e) {
+        let v = e.target.value.replace(/\D/g, '');
+        if (v.length > 11) v = v.slice(0, 11);
+        if (v.length > 0) {
+          v = v.replace(/^(\d{2})(\d)/g, '($1) $2');
+          v = v.replace(/(\d)(\d{4})$/, '$1-$2');
+        }
+        e.target.value = v;
+      });
+    }
+    mascaraTelefone(document.getElementById('telefoneCelular'));
+    mascaraTelefone(document.getElementById('telefoneResidencial'));
+
+    // ===== Criar / Atualizar =====
     function salvar(event) {
       event.preventDefault();
 
       const nome = document.getElementById('nome').value.trim();
       const matricula = document.getElementById('matricula').value.trim();
       const dataNascimento = document.getElementById('dataNascimento').value;
+      const sexo = document.getElementById('sexo').value;
+      const raca = document.getElementById('raca').value;
+      const nacionalidade = document.getElementById('nacionalidade').value;
       const filiacao1 = document.getElementById('filiacao1').value.trim();
       const filiacao2 = document.getElementById('filiacao2').value.trim();
+      const estado = document.getElementById('estado').value;
+      const municipio = document.getElementById('municipio').value.trim();
+      const telefoneCelular = document.getElementById('telefoneCelular').value.trim();
+      const telefoneResidencial = document.getElementById('telefoneResidencial').value.trim();
       const foto = document.getElementById('foto-base64').value;
 
       if (editandoId) {
         alunos = alunos.map(a =>
-          a.id === editandoId ? { ...a, nome, matricula, dataNascimento, filiacao1, filiacao2, foto } : a
+          a.id === editandoId ? { ...a, nome, matricula, dataNascimento, sexo, raca, nacionalidade, filiacao1, filiacao2, estado, municipio, telefoneCelular, telefoneResidencial, foto } : a
         );
       } else {
         const novo = {
           id: Date.now(),
-          nome,
-          matricula,
-          dataNascimento,
-          filiacao1,
-          filiacao2,
-          foto
+          nome, matricula, dataNascimento, sexo, raca, nacionalidade, filiacao1, filiacao2, estado, municipio, telefoneCelular, telefoneResidencial, foto
         };
         alunos.push(novo);
       }
 
       persistir();
       render();
-      fecharModal();
+      cancelarEdicao();
     }
 
     // ===== Editar =====
     function editar(id) {
       const aluno = alunos.find(a => a.id === id);
-      if (aluno) abrirModal(aluno);
+      if (aluno) {
+        editandoId = aluno.id;
+        preencherFormulario(aluno);
+
+        document.getElementById('form-title').textContent = 'Editando Aluno';
+        document.getElementById('btn-salvar').textContent = 'Atualizar Cadastro';
+        document.getElementById('btn-cancelar-edicao').style.display = 'inline-block';
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
     }
 
     // ===== Excluir =====
@@ -705,9 +787,6 @@
       const dataHora = agora.toLocaleString('pt-BR');
       const info = document.getElementById('print-info');
       info.textContent = `${titulo} — Gerado em ${dataHora}`;
-
-      const footer = document.getElementById('print-footer');
-      footer.textContent = `Documento gerado pelo SGE · Gerenciar Alunos — ${dataHora}`;
     }
 
     function finalizarImpressao() {
