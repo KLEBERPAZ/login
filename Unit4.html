@@ -1,0 +1,542 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SGE · Administrativo</title>
+
+  <!-- Fonte e Ícones -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background-color: #f8f9fa;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* =========================================
+       HEADER AZUL (TOPO)
+    ========================================= */
+    .header-top {
+      background-color: #004a8d;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.4rem 1rem;
+      font-size: 0.85rem;
+      height: 48px;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .header-logo .logo-text span { color: #ffcc00; }
+    .header-logo .logo-sub { font-size: 0.55rem; font-weight: 400; display: block; line-height: 1; }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .header-icons {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      font-size: 1.1rem;
+    }
+
+    .header-icons i { cursor: pointer; }
+    .header-icons .fa-cake-candles { color: #ffcc00; }
+
+    .btn-header {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.4);
+      color: white;
+      padding: 0.3rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-header:hover { background: rgba(255,255,255,0.1); }
+
+    .header-year {
+      background: white;
+      color: #004a8d;
+      padding: 0.3rem 0.75rem;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+
+    /* =========================================
+       MENU SECUNDÁRIO (SUBMENU)
+    ========================================= */
+    .header-menu {
+      background-color: #fff;
+      border-bottom: 2px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      padding: 0 1rem;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .header-menu-item {
+      padding: 0.8rem 1rem;
+      font-size: 0.85rem;
+      color: #444;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-bottom: 2px solid transparent;
+      transition: 0.2s;
+    }
+
+    .header-menu-item:hover { color: #004a8d; }
+
+    .header-menu-item.active {
+      color: #004a8d;
+      font-weight: 600;
+      border-bottom-color: #004a8d;
+    }
+
+    .header-menu-item i { font-size: 0.9rem; }
+
+    /* =========================================
+       CONTAINER PRINCIPAL
+    ========================================= */
+    .main-container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      width: 100%;
+      flex: 1;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Fundo de Marca D'água (Pássaro e Mapa) */
+    .watermark-bg {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 800px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23cbd5e1'%3E%3Cpath d='M21.5 11.5c0 3-2.5 5.5-5.5 5.5h-5c-1.5 0-2.8-.6-3.8-1.5l-2.7 2.7c-.4.4-1 .4-1.4 0-.4-.4-.4-1 0-1.4l2.3-2.3C4.5 13.1 4 11.8 4 10.5 4 7.5 6.5 5 9.5 5h6c3.3 0 6 2.7 6 6.5z'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Título da Página */
+    .page-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .page-subtitle {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #004a8d;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      letter-spacing: 0.5px;
+    }
+
+    /* =========================================
+       CARDS DE ESTATÍSTICAS (TOPO)
+    ========================================= */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .stat-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .stat-card:hover {
+      border-color: #3b82f6;
+      box-shadow: 0 4px 6px rgba(59,130,246,0.05);
+    }
+
+    /* Card Ativo (Estudantes) */
+    .stat-card.active {
+      background-color: #004a8d;
+      border-color: #004a8d;
+      color: white;
+    }
+    .stat-card.active .stat-value,
+    .stat-card.active .stat-label,
+    .stat-card.active .stat-icon {
+      color: white;
+    }
+
+    .stat-icon {
+      font-size: 1.5rem;
+      color: #64748b;
+    }
+
+    .stat-info {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #004a8d;
+      line-height: 1.1;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    /* =========================================
+       CARDS DE ATALHO (PARTE INFERIOR)
+    ========================================= */
+    .shortcuts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .shortcut-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+    }
+
+    .shortcut-card:hover {
+      border-color: #3b82f6;
+      box-shadow: 0 4px 8px rgba(59,130,246,0.05);
+    }
+
+    /* Marca d'água nos cards de atalho */
+    .shortcut-card::before {
+      content: '';
+      position: absolute;
+      bottom: -20px; left: -20px;
+      width: 120px; height: 120px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23cbd5e1'%3E%3Cpath d='M21.5 11.5c0 3-2.5 5.5-5.5 5.5h-5c-1.5 0-2.8-.6-3.8-1.5l-2.7 2.7c-.4.4-1 .4-1.4 0-.4-.4-.4-1 0-1.4l2.3-2.3C4.5 13.1 4 11.8 4 10.5 4 7.5 6.5 5 9.5 5h6c3.3 0 6 2.7 6 6.5z'/%3E%3C/svg%3E");
+      background-size: contain;
+      background-repeat: no-repeat;
+      opacity: 0.05;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .shortcut-card > * { position: relative; z-index: 1; }
+
+    .shortcut-card i {
+      font-size: 1.5rem;
+      color: #64748b;
+    }
+
+    .shortcut-card span {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #444;
+    }
+
+    /* =========================================
+       BOTÃO FLUTUANTE DE PENDÊNCIAS
+    ========================================= */
+    .btn-pendencias {
+      position: fixed;
+      bottom: 50px;
+      right: 20px;
+      width: 48px;
+      height: 48px;
+      background-color: #ef4444;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.4rem;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+      cursor: pointer;
+      z-index: 100;
+      transition: transform 0.2s;
+      border: none;
+    }
+    .btn-pendencias:hover { transform: scale(1.05); }
+
+    /* =========================================
+       RODAPÉ
+    ========================================= */
+    footer {
+      background-color: #e2e8f0;
+      border-top: 3px solid #004a8d;
+      padding: 0.4rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: #555;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      z-index: 10;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .footer-links a {
+      color: #555;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .footer-links a:hover { color: #004a8d; }
+
+    /* =========================================
+       RESPONSIVIDADE
+    ========================================= */
+    @media (max-width: 1024px) {
+      .stats-grid { grid-template-columns: repeat(3, 1fr); }
+      .shortcuts-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .shortcuts-grid { grid-template-columns: 1fr; }
+      .header-menu { display: none; }
+      .header-right { gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fundo de Marca D'água Global -->
+  <div class="watermark-bg"></div>
+
+  <!-- ================= HEADER TOP ================= -->
+  <header class="header-top">
+    <div class="header-logo">
+      <div class="logo-text">
+        SGE <span>+</span>
+        <span class="logo-sub">SISTEMA DE GESTÃO ESCOLAR</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="header-icons">
+        <i class="fa-solid fa-cake-candles" title="Aniversariantes"></i>
+        <i class="fa-solid fa-envelope" title="Mensagens"></i>
+        <i class="fa-solid fa-bell" title="Notificações"></i>
+      </div>
+      <button class="btn-header">
+        <i class="fa-solid fa-table-cells-large"></i> Módulos
+      </button>
+      <button class="btn-header">
+        <i class="fa-solid fa-user"></i> KLEBER
+      </button>
+      <div class="header-year">2026</div>
+    </div>
+  </header>
+
+  <!-- ================= SUBMENU ================= -->
+  <nav class="header-menu">
+    <a href="#" class="header-menu-item active">
+      <i class="fa-solid fa-arrows-rotate"></i> Administrativo
+    </a>
+    <a href="#" class="header-menu-item">
+      <i class="fa-solid fa-house"></i> Início
+    </a>
+    <a href="#" class="header-menu-item">
+      <i class="fa-solid fa-user-graduate"></i> Cadastros <i class="fa-solid fa-caret-down" style="font-size:0.7rem; margin-left:0.2rem;"></i>
+    </a>
+    <a href="#" class="header-menu-item">
+      <i class="fa-solid fa-user-check"></i> Matrícula <i class="fa-solid fa-caret-down" style="font-size:0.7rem; margin-left:0.2rem;"></i>
+    </a>
+    <a href="#" class="header-menu-item">
+      <i class="fa-solid fa-users-gear"></i> Usuários <i class="fa-solid fa-caret-down" style="font-size:0.7rem; margin-left:0.2rem;"></i>
+    </a>
+    <a href="#" class="header-menu-item">
+      <i class="fa-solid fa-chart-pie"></i> Planejamento Estratégico
+    </a>
+    <a href="#" class="header-menu-item">
+      <i class="fa-solid fa-file-signature"></i> Credenciamento
+    </a>
+    <a href="#" class="header-menu-item">
+      <i class="fa-solid fa-box"></i> Patrimônio
+    </a>
+    <a href="#" class="header-menu-item">
+      <i class="fa-solid fa-bus"></i> Transporte Escolar
+    </a>
+    <a href="#" class="header-menu-item">
+      <i class="fa-solid fa-file-lines"></i> Relatórios
+    </a>
+  </nav>
+
+  <!-- ================= CONTEÚDO PRINCIPAL ================= -->
+  <main class="main-container">
+
+    <!-- Título -->
+    <div class="page-title">
+      <i class="fa-solid fa-house" style="color:#555;"></i> Início
+    </div>
+    <div class="page-subtitle">Dados referentes ao ano letivo de 2026</div>
+
+    <!-- Grid de Estatísticas -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <i class="fa-solid fa-building-columns stat-icon"></i>
+        <div class="stat-info">
+          <span class="stat-value">1</span>
+          <span class="stat-label">Escolas</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <i class="fa-solid fa-clipboard-list stat-icon"></i>
+        <div class="stat-info">
+          <span class="stat-value">16</span>
+          <span class="stat-label">Turmas Regulares</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <i class="fa-solid fa-clipboard-list stat-icon"></i>
+        <div class="stat-info">
+          <span class="stat-value">2</span>
+          <span class="stat-label">Turmas AEE</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <i class="fa-solid fa-user-tie stat-icon"></i>
+        <div class="stat-info">
+          <span class="stat-value">15</span>
+          <span class="stat-label">Docentes</span>
+        </div>
+      </div>
+
+      <!-- Card Ativo -->
+      <div class="stat-card active">
+        <i class="fa-solid fa-users stat-icon"></i>
+        <div class="stat-info">
+          <span class="stat-value">419</span>
+          <span class="stat-label">Estudantes</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <i class="fa-solid fa-wheelchair stat-icon"></i>
+        <div class="stat-info">
+          <span class="stat-value">89</span>
+          <span class="stat-label">Acessibilidades</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid de Atalhos -->
+    <div class="shortcuts-grid">
+      <a href="#" class="shortcut-card">
+        <i class="fa-regular fa-file-lines"></i>
+        <span>Histórico Escolar</span>
+      </a>
+
+      <a href="#" class="shortcut-card">
+        <i class="fa-regular fa-file-lines"></i>
+        <span>Certificado Escolar</span>
+      </a>
+
+      <a href="#" class="shortcut-card">
+        <i class="fa-regular fa-circle-exclamation"></i>
+        <span>Pendências Cadastrais</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- Botão Flutuante de Pendências -->
+  <button class="btn-pendencias" title="Pendências">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+  </button>
+
+  <!-- ================= RODAPÉ ================= -->
+  <footer>
+    <div class="footer-links">
+      <a href="#"><i class="fa-solid fa-video"></i> Tutoriais</a>
+      <a href="#"><i class="fa-solid fa-book"></i> BCM</a>
+      <a href="#"><i class="fa-solid fa-book"></i> Formar Integralmente</a>
+      <a href="#"><i class="fa-solid fa-chart-line"></i> Política Especial de Recuperação da Aprendizagem</a>
+      <a href="#"><i class="fa-solid fa-heart"></i> Qualidade de Vida</a>
+    </div>
+    <div>
+      <span>SGE 13.8.5</span>
+    </div>
+  </footer>
+
+</body>
+</html>

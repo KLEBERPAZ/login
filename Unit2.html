@@ -14,13 +14,13 @@
 
     body {
       min-height: 100vh;
-      background-color: #f4f6f8; /* Fundo claro igual ao da imagem */
+      background-color: #f4f6f8;
       color: #333;
       display: flex;
       flex-direction: column;
     }
 
-    /* ===== HEADER (Estilo da Imagem) ===== */
+    /* ===== HEADER ===== */
     header {
       background-color: #004a8d;
       color: white;
@@ -93,7 +93,7 @@
       flex: 1;
     }
 
-    /* ===== GRADE DE CARDS (5 Colunas no Desktop) ===== */
+    /* ===== GRADE DE CARDS ===== */
     .menu-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -125,7 +125,7 @@
       transform: translateY(-2px);
     }
 
-    /* Marca d'água (Pombinha) sutil no fundo dos cards */
+    /* Marca d'água (Pombinha) */
     .menu-card::before {
       content: '';
       position: absolute;
@@ -141,7 +141,6 @@
 
     .menu-card > * { position: relative; z-index: 1; }
 
-    /* Ícones azuis dos cards */
     .menu-card i {
       font-size: 28px;
       color: #007bff;
@@ -154,7 +153,7 @@
       text-align: center;
     }
 
-    /* ===== BOTÃO FLUTUANTE DE PENDÊNCIAS (Triângulo Vermelho) ===== */
+    /* ===== BOTÃO FLUTUANTE DE PENDÊNCIAS ===== */
     .btn-pendencias {
       position: fixed;
       bottom: 60px;
@@ -219,7 +218,6 @@
     }
   </style>
 
-  <!-- Font Awesome para os Ícones -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 </head>
 <body>
@@ -227,7 +225,6 @@
   <!-- HEADER -->
   <header>
     <div class="header-logo">
-      <!-- Logo Simulada -->
       <i class="fa-solid fa-graduation-cap"></i>
       SGE <span>+</span> <small>SISTEMA DE GESTÃO ESCOLAR</small>
     </div>
@@ -256,7 +253,8 @@
         <span>Acadêmico</span>
       </a>
 
-      <a href="#" class="menu-card">
+      <!-- CARD ALTERADO PARA ACESSAR A UNIT4 -->
+      <a href="Unit4.html" class="menu-card">
         <i class="fa-solid fa-retweet"></i>
         <span>Administrativo</span>
       </a>
