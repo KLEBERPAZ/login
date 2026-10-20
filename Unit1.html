@@ -274,7 +274,8 @@
       // ====== CONFIGURAÇÃO ======
       const VALID_USERNAME = '123';
       const VALID_PASSWORD = '123';
-      const REDIRECT_URL = 'Unit2.html'; // ← destino após login
+      const REDIRECT_URL = 'Unit2.html';
+      const STORAGE_KEY = 'tms_remember_credentials';
       // ==========================
 
       const form = document.getElementById('loginForm');
@@ -287,6 +288,49 @@
       const eyeIcon = document.getElementById('eyeIcon');
       const loginBtn = document.getElementById('loginBtn');
       const forgotLink = document.getElementById('forgotLink');
+      const rememberCheckbox = document.getElementById('remember');
+
+      // ============================================================
+      // 🔐 Restaura credenciais salvas ao carregar a página
+      // ============================================================
+      function carregarCredenciaisSalvas() {
+        try {
+          const saved = localStorage.getItem(STORAGE_KEY);
+          if (!saved) return;
+
+          const creds = JSON.parse(saved);
+          if (creds && creds.username) {
+            usernameInput.value = creds.username;
+            if (creds.password) {
+              passwordInput.value = creds.password;
+            }
+            rememberCheckbox.checked = true;
+          }
+        } catch (e) {
+          localStorage.removeItem(STORAGE_KEY);
+        }
+      }
+
+      // ============================================================
+      // 💾 Salva ou remove credenciais conforme o checkbox
+      // ============================================================
+      function salvarCredenciais(username, password) {
+        if (rememberCheckbox.checked) {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify({
+            username: username,
+            password: password
+          }));
+        } else {
+          localStorage.removeItem(STORAGE_KEY);
+        }
+      }
+
+      // Se o usuário desmarcar "Lembrar-me", apaga imediatamente
+      rememberCheckbox.addEventListener('change', function() {
+        if (!this.checked) {
+          localStorage.removeItem(STORAGE_KEY);
+        }
+      });
 
       // Mostrar/ocultar senha
       togglePasswordBtn.addEventListener('click', function() {
@@ -348,7 +392,7 @@
         const password = passwordInput.value;
 
         if (username === VALID_USERNAME && password === VALID_PASSWORD) {
-          // ✅ Login correto → redireciona para unit2.html
+          // ✅ Login correto
           loginBtn.disabled = true;
           loginBtn.innerHTML = `
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation: spin 1s linear infinite;">
@@ -358,7 +402,10 @@
             <span>Entrando...</span>
           `;
 
-          // Salva a sessão (para o unit2 saber quem logou)
+          // 💾 Salva credenciais (só se "Lembrar-me" estiver marcado)
+          salvarCredenciais(username, password);
+
+          // Sessão do usuário logado
           sessionStorage.setItem('tms_user', username);
 
           setTimeout(() => {
@@ -384,7 +431,14 @@
         alert('Usuário: 123\nSenha: 123');
       });
 
-      usernameInput.focus();
+      // 🔄 Inicialização
+      carregarCredenciaisSalvas();
+
+      if (!usernameInput.value) {
+        usernameInput.focus();
+      } else {
+        passwordInput.focus();
+      }
     })();
   </script>
 </body>
