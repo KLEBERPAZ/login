@@ -33,6 +33,12 @@
       gap: 1rem;
     }
 
+    .header-actions {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
     h1 {
       font-size: 2rem;
       font-weight: 800;
@@ -56,29 +62,20 @@
       gap: 0.5rem;
     }
 
-    .btn-primary {
-      background: #3b82f6;
-      color: white;
-    }
+    .btn-primary { background: #3b82f6; color: white; }
     .btn-primary:hover { background: #2563eb; }
 
-    .btn-danger {
-      background: #ef4444;
-      color: white;
-    }
+    .btn-danger { background: #ef4444; color: white; }
     .btn-danger:hover { background: #dc2626; }
 
-    .btn-edit {
-      background: #f59e0b;
-      color: white;
-    }
+    .btn-edit { background: #f59e0b; color: white; }
     .btn-edit:hover { background: #d97706; }
 
-    .btn-secondary {
-      background: #334155;
-      color: white;
-    }
+    .btn-secondary { background: #334155; color: white; }
     .btn-secondary:hover { background: #475569; }
+
+    .btn-print { background: #10b981; color: white; }
+    .btn-print:hover { background: #059669; }
 
     .btn-sm {
       padding: 0.4rem 0.7rem;
@@ -99,9 +96,7 @@
       border-collapse: collapse;
     }
 
-    thead {
-      background: #0f172a;
-    }
+    thead { background: #0f172a; }
 
     th, td {
       padding: 1rem;
@@ -122,9 +117,7 @@
       transition: background 0.2s;
     }
 
-    tbody tr:hover {
-      background: #293548;
-    }
+    tbody tr:hover { background: #293548; }
 
     .empty {
       padding: 3rem;
@@ -142,7 +135,7 @@
     .badge-ativo { background: #064e3b; color: #6ee7b7; }
     .badge-inativo { background: #7f1d1d; color: #fca5a5; }
 
-    .actions { display: flex; gap: 0.5rem; }
+    .actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 
     /* Avatar */
     .avatar {
@@ -197,9 +190,7 @@
       margin-bottom: 1.5rem;
     }
 
-    .form-group {
-      margin-bottom: 1rem;
-    }
+    .form-group { margin-bottom: 1rem; }
 
     .form-group label {
       display: block;
@@ -223,9 +214,7 @@
     }
 
     .form-group input:focus,
-    .form-group select:focus {
-      border-color: #3b82f6;
-    }
+    .form-group select:focus { border-color: #3b82f6; }
 
     /* Upload de foto */
     .foto-upload {
@@ -261,13 +250,8 @@
       gap: 0.4rem;
     }
 
-    .foto-upload-actions label {
-      margin-bottom: 0;
-    }
-
-    .foto-upload-actions input[type="file"] {
-      display: none;
-    }
+    .foto-upload-actions label { margin-bottom: 0; }
+    .foto-upload-actions input[type="file"] { display: none; }
 
     .btn-upload {
       background: #334155;
@@ -307,13 +291,127 @@
       th, td { padding: 0.7rem 0.5rem; font-size: 0.85rem; }
       .actions { flex-direction: column; }
     }
+
+    /* ===== CSS de impressão ===== */
+    @media print {
+      @page {
+        size: A4;
+        margin: 1.5cm;
+      }
+
+      body {
+        background: white !important;
+        color: #111 !important;
+        padding: 0 !important;
+      }
+
+      .container { max-width: 100%; }
+
+      header {
+        display: block;
+        margin-bottom: 1rem;
+        border-bottom: 2px solid #111;
+        padding-bottom: 0.75rem;
+      }
+
+      h1 {
+        font-size: 1.4rem;
+        color: #111 !important;
+        margin-bottom: 0.25rem;
+      }
+
+      h1 .destaque { color: #2563eb !important; }
+
+      .header-actions,
+      .actions,
+      .btn { display: none !important; }
+
+      .print-info {
+        display: block !important;
+        font-size: 0.8rem;
+        color: #555;
+        margin-top: 0.5rem;
+      }
+
+      .table-wrapper {
+        background: white !important;
+        border: 1px solid #999 !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        overflow: visible !important;
+      }
+
+      table { width: 100%; }
+
+      thead { background: #f1f5f9 !important; }
+
+      th, td {
+        color: #111 !important;
+        border: 1px solid #ccc !important;
+        padding: 0.5rem !important;
+        font-size: 0.8rem !important;
+      }
+
+      th {
+        background: #e2e8f0 !important;
+        font-size: 0.75rem !important;
+      }
+
+      tbody tr:hover { background: transparent !important; }
+
+      .avatar {
+        width: 36px !important;
+        height: 36px !important;
+        border: 1px solid #999 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .avatar-initials {
+        width: 36px !important;
+        height: 36px !important;
+        font-size: 0.75rem !important;
+        border: 1px solid #999 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .badge {
+        border: 1px solid #999 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .empty { color: #555 !important; }
+
+      /* Esconde coluna de ações na impressão */
+      th:last-child,
+      td:last-child { display: none !important; }
+
+      .print-footer {
+        display: block !important;
+        margin-top: 1.5rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid #999;
+        font-size: 0.75rem;
+        color: #555;
+        text-align: center;
+      }
+    }
+
+    .print-info,
+    .print-footer { display: none; }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
       <h1>TMS · <span class="destaque">Motoristas</span></h1>
-      <button class="btn btn-primary" onclick="abrirModal()">➕ Novo Motorista</button>
+      <div class="header-actions">
+        <button class="btn btn-print" onclick="imprimirTodos()">🖨️ Imprimir PDF</button>
+        <button class="btn btn-primary" onclick="abrirModal()">➕ Novo Motorista</button>
+      </div>
+      <div class="print-info" id="print-info"></div>
     </header>
 
     <div class="table-wrapper">
@@ -330,6 +428,10 @@
         </thead>
         <tbody id="tabela-body"></tbody>
       </table>
+    </div>
+
+    <div class="print-footer" id="print-footer">
+      Documento gerado pelo TMS · Gerenciar Motoristas
     </div>
   </div>
 
@@ -384,6 +486,7 @@
     // ===== Estado =====
     let motoristas = JSON.parse(localStorage.getItem('tms_motoristas')) || [];
     let editandoId = null;
+    let filtroImpressao = null; // null = todos, id = motorista específico
 
     // ===== Persistência =====
     function persistir() {
@@ -397,13 +500,16 @@
     // ===== Render =====
     function render() {
       const tbody = document.getElementById('tabela-body');
+      const lista = filtroImpressao
+        ? motoristas.filter(m => m.id === filtroImpressao)
+        : motoristas;
 
-      if (motoristas.length === 0) {
+      if (lista.length === 0) {
         tbody.innerHTML = `<tr><td colspan="6" class="empty">Nenhum motorista cadastrado ainda. Clique em "Novo Motorista" para começar.</td></tr>`;
         return;
       }
 
-      tbody.innerHTML = motoristas.map(m => `
+      tbody.innerHTML = lista.map(m => `
         <tr>
           <td>${renderAvatar(m)}</td>
           <td>${escapeHtml(m.nome)}</td>
@@ -418,6 +524,7 @@
             <div class="actions">
               <button class="btn btn-edit btn-sm" onclick="editar(${m.id})">✏️ Editar</button>
               <button class="btn btn-danger btn-sm" onclick="excluir(${m.id})">🗑️ Excluir</button>
+              <button class="btn btn-print btn-sm" onclick="imprimirUm(${m.id})" title="Imprimir apenas este registro">🖨️ PDF</button>
             </div>
           </td>
         </tr>
@@ -492,7 +599,6 @@
         return;
       }
 
-      // Limite de ~2MB para não estourar o localStorage
       if (file.size > 2 * 1024 * 1024) {
         alert('A imagem é muito grande. Escolha uma foto com até 2MB.');
         event.target.value = '';
@@ -540,12 +646,10 @@
       if (!nome || !cnh || !telefone) return;
 
       if (editandoId) {
-        // UPDATE
         motoristas = motoristas.map(m =>
           m.id === editandoId ? { ...m, nome, cnh, telefone, status, foto } : m
         );
       } else {
-        // CREATE
         const novo = {
           id: Date.now(),
           nome,
@@ -576,6 +680,50 @@
       if (confirm(`Deseja realmente excluir o motorista "${motorista.nome}"?`)) {
         motoristas = motoristas.filter(m => m.id !== id);
         persistir();
+        render();
+      }
+    }
+
+    // ===== Impressão / PDF =====
+    function imprimirTodos() {
+      if (motoristas.length === 0) {
+        alert('Não há motoristas cadastrados para imprimir.');
+        return;
+      }
+      filtroImpressao = null;
+      prepararImpressao('Relatório de Motoristas · Todos os registros');
+      window.print();
+      finalizarImpressao();
+    }
+
+    function imprimirUm(id) {
+      const motorista = motoristas.find(m => m.id === id);
+      if (!motorista) return;
+
+      filtroImpressao = id;
+      prepararImpressao(`Relatório de Motorista · ${motorista.nome}`);
+      render();
+      window.print();
+      finalizarImpressao();
+    }
+
+    function prepararImpressao(titulo) {
+      const agora = new Date();
+      const dataHora = agora.toLocaleString('pt-BR');
+      const info = document.getElementById('print-info');
+      info.textContent = `${titulo} — Gerado em ${dataHora}`;
+
+      const footer = document.getElementById('print-footer');
+      footer.textContent = `Documento gerado pelo TMS · Gerenciar Motoristas — ${dataHora}`;
+    }
+
+    function finalizarImpressao() {
+      // Restaura o estado normal após fechar o diálogo de impressão
+      const info = document.getElementById('print-info');
+      info.textContent = '';
+
+      if (filtroImpressao !== null) {
+        filtroImpressao = null;
         render();
       }
     }
