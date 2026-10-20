@@ -144,6 +144,29 @@
 
     .actions { display: flex; gap: 0.5rem; }
 
+    /* Avatar */
+    .avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #334155;
+      display: block;
+    }
+
+    .avatar-initials {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: white;
+      border: 2px solid #334155;
+    }
+
     /* Modal */
     .modal-overlay {
       position: fixed;
@@ -165,6 +188,8 @@
       width: 100%;
       max-width: 500px;
       border: 1px solid #334155;
+      max-height: 90vh;
+      overflow-y: auto;
     }
 
     .modal h2 {
@@ -202,6 +227,74 @@
       border-color: #3b82f6;
     }
 
+    /* Upload de foto */
+    .foto-upload {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .foto-preview {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: #0f172a;
+      border: 2px dashed #334155;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+      color: #64748b;
+      font-size: 1.5rem;
+    }
+
+    .foto-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .foto-upload-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .foto-upload-actions label {
+      margin-bottom: 0;
+    }
+
+    .foto-upload-actions input[type="file"] {
+      display: none;
+    }
+
+    .btn-upload {
+      background: #334155;
+      color: white;
+      padding: 0.5rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.2s;
+    }
+
+    .btn-upload:hover { background: #475569; }
+
+    .btn-remover-foto {
+      background: transparent;
+      color: #fca5a5;
+      border: none;
+      font-size: 0.8rem;
+      cursor: pointer;
+      text-align: left;
+      padding: 0.2rem 0;
+    }
+
+    .btn-remover-foto:hover { text-decoration: underline; }
+
     .modal-actions {
       display: flex;
       justify-content: flex-end;
@@ -227,6 +320,7 @@
       <table>
         <thead>
           <tr>
+            <th>Foto</th>
             <th>Nome</th>
             <th>CNH</th>
             <th>Telefone</th>
@@ -245,6 +339,20 @@
       <h2 id="modal-title">Novo Motorista</h2>
       <form id="form-motorista" onsubmit="salvar(event)">
         <input type="hidden" id="motorista-id">
+        <input type="hidden" id="foto-base64">
+
+        <div class="form-group">
+          <label>Foto</label>
+          <div class="foto-upload">
+            <div class="foto-preview" id="foto-preview">👤</div>
+            <div class="foto-upload-actions">
+              <label for="foto-input" class="btn-upload">📷 Escolher foto</label>
+              <input type="file" id="foto-input" accept="image/*" onchange="processarFoto(event)">
+              <button type="button" class="btn-remover-foto" id="btn-remover-foto" onclick="removerFoto()" style="display:none;">Remover foto</button>
+            </div>
+          </div>
+        </div>
+
         <div class="form-group">
           <label>Nome</label>
           <input type="text" id="nome" required placeholder="Ex: João da Silva">
@@ -279,7 +387,11 @@
 
     // ===== Persistência =====
     function persistir() {
-      localStorage.setItem('tms_motoristas', JSON.stringify(motoristas));
+      try {
+        localStorage.setItem('tms_motoristas', JSON.stringify(motoristas));
+      } catch (e) {
+        alert('Não foi possível salvar. As fotos podem estar ocupando muito espaço do localStorage. Tente fotos menores.');
+      }
     }
 
     // ===== Render =====
@@ -287,12 +399,13 @@
       const tbody = document.getElementById('tabela-body');
 
       if (motoristas.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="empty">Nenhum motorista cadastrado ainda. Clique em "Novo Motorista" para começar.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6" class="empty">Nenhum motorista cadastrado ainda. Clique em "Novo Motorista" para começar.</td></tr>`;
         return;
       }
 
       tbody.innerHTML = motoristas.map(m => `
         <tr>
+          <td>${renderAvatar(m)}</td>
           <td>${escapeHtml(m.nome)}</td>
           <td>${escapeHtml(m.cnh)}</td>
           <td>${escapeHtml(m.telefone)}</td>
@@ -311,6 +424,28 @@
       `).join('');
     }
 
+    function renderAvatar(m) {
+      if (m.foto) {
+        return `<img src="${m.foto}" alt="Foto de ${escapeHtml(m.nome)}" class="avatar">`;
+      }
+      const iniciais = getIniciais(m.nome);
+      const cor = corPorNome(m.nome);
+      return `<div class="avatar-initials" style="background:${cor}">${iniciais}</div>`;
+    }
+
+    function getIniciais(nome) {
+      const partes = String(nome).trim().split(/\s+/);
+      if (partes.length === 1) return partes[0].substring(0, 2).toUpperCase();
+      return (partes[0][0] + partes[partes.length - 1][0]).toUpperCase();
+    }
+
+    function corPorNome(nome) {
+      let hash = 0;
+      for (let i = 0; i < nome.length; i++) hash = nome.charCodeAt(i) + ((hash << 5) - hash);
+      const cores = ['#3b82f6', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#ef4444', '#06b6d4'];
+      return cores[Math.abs(hash) % cores.length];
+    }
+
     // ===== Modal =====
     function abrirModal(motorista = null) {
       const modal = document.getElementById('modal');
@@ -323,11 +458,15 @@
         document.getElementById('cnh').value = motorista.cnh;
         document.getElementById('telefone').value = motorista.telefone;
         document.getElementById('status').value = motorista.status;
+        document.getElementById('foto-base64').value = motorista.foto || '';
+        atualizarPreview(motorista.foto || null);
         editandoId = motorista.id;
       } else {
         title.textContent = 'Novo Motorista';
         document.getElementById('form-motorista').reset();
         document.getElementById('motorista-id').value = '';
+        document.getElementById('foto-base64').value = '';
+        atualizarPreview(null);
         editandoId = null;
       }
 
@@ -337,7 +476,55 @@
     function fecharModal() {
       document.getElementById('modal').classList.remove('active');
       document.getElementById('form-motorista').reset();
+      document.getElementById('foto-base64').value = '';
+      atualizarPreview(null);
       editandoId = null;
+    }
+
+    // ===== Foto =====
+    function processarFoto(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith('image/')) {
+        alert('Por favor, selecione um arquivo de imagem.');
+        event.target.value = '';
+        return;
+      }
+
+      // Limite de ~2MB para não estourar o localStorage
+      if (file.size > 2 * 1024 * 1024) {
+        alert('A imagem é muito grande. Escolha uma foto com até 2MB.');
+        event.target.value = '';
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const base64 = e.target.result;
+        document.getElementById('foto-base64').value = base64;
+        atualizarPreview(base64);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function atualizarPreview(base64) {
+      const preview = document.getElementById('foto-preview');
+      const btnRemover = document.getElementById('btn-remover-foto');
+
+      if (base64) {
+        preview.innerHTML = `<img src="${base64}" alt="Pré-visualização">`;
+        btnRemover.style.display = 'block';
+      } else {
+        preview.innerHTML = '👤';
+        btnRemover.style.display = 'none';
+      }
+    }
+
+    function removerFoto() {
+      document.getElementById('foto-base64').value = '';
+      document.getElementById('foto-input').value = '';
+      atualizarPreview(null);
     }
 
     // ===== Criar / Atualizar =====
@@ -348,13 +535,14 @@
       const cnh = document.getElementById('cnh').value.trim();
       const telefone = document.getElementById('telefone').value.trim();
       const status = document.getElementById('status').value;
+      const foto = document.getElementById('foto-base64').value;
 
       if (!nome || !cnh || !telefone) return;
 
       if (editandoId) {
         // UPDATE
         motoristas = motoristas.map(m =>
-          m.id === editandoId ? { ...m, nome, cnh, telefone, status } : m
+          m.id === editandoId ? { ...m, nome, cnh, telefone, status, foto } : m
         );
       } else {
         // CREATE
@@ -363,7 +551,8 @@
           nome,
           cnh,
           telefone,
-          status
+          status,
+          foto
         };
         motoristas.push(novo);
       }
