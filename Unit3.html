@@ -4,427 +4,94 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SGE · Cadastrar Estudante</title>
-
-  <!-- Fonte e Ícones -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
-
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Roboto', sans-serif;
-    }
-
-    body {
-      background-color: #f8f9fa;
-      color: #333;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    /* =========================================
-       HEADER AZUL (TOPO)
-    ========================================= */
-    .header-top {
-      background-color: #004a8d;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.4rem 1rem;
-      font-size: 0.85rem;
-      height: 48px;
-    }
-
-    .header-logo {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-weight: 700;
-      font-size: 1.2rem;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+    body { background-color: #f8f9fa; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+    .header-top { background-color: #004a8d; color: white; display: flex; justify-content: space-between; align-items: center; padding: 0.4rem 1rem; font-size: 0.85rem; height: 48px; }
+    .header-logo { display: flex; align-items: center; gap: 0.5rem; font-weight: 700; font-size: 1.2rem; }
     .header-logo .logo-text span { color: #ffcc00; }
     .header-logo .logo-sub { font-size: 0.55rem; font-weight: 400; display: block; line-height: 1; }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .header-icons {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-      font-size: 1.1rem;
-    }
-
+    .header-right { display: flex; align-items: center; gap: 1rem; }
+    .header-icons { display: flex; gap: 1rem; align-items: center; font-size: 1.1rem; }
     .header-icons i { cursor: pointer; }
     .header-icons .fa-cake-candles { color: #ffcc00; }
-
-    .btn-header {
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.4);
-      color: white;
-      padding: 0.3rem 0.75rem;
-      border-radius: 4px;
-      font-size: 0.75rem;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      cursor: pointer;
-    }
+    .btn-header { background: transparent; border: 1px solid rgba(255,255,255,0.4); color: white; padding: 0.3rem 0.75rem; border-radius: 4px; font-size: 0.75rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; }
     .btn-header:hover { background: rgba(255,255,255,0.1); }
-
-    .header-year {
-      background: white;
-      color: #004a8d;
-      padding: 0.3rem 0.75rem;
-      border-radius: 4px;
-      font-weight: 700;
-      font-size: 0.8rem;
-    }
-
-    /* =========================================
-       SUBMENU (Branco)
-    ========================================= */
-    .header-menu {
-      background-color: #fff;
-      border-bottom: 2px solid #e0e0e0;
-      display: flex;
-      align-items: center;
-      padding: 0 1rem;
-      white-space: nowrap;
-      overflow-x: auto;
-    }
-
-    .header-menu-item {
-      padding: 0.8rem 1rem;
-      font-size: 0.85rem;
-      color: #444;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      border-bottom: 2px solid transparent;
-    }
-
+    .header-year { background: white; color: #004a8d; padding: 0.3rem 0.75rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem; }
+    .header-menu { background-color: #fff; border-bottom: 2px solid #e0e0e0; display: flex; align-items: center; padding: 0 1rem; white-space: nowrap; overflow-x: auto; }
+    .header-menu-item { padding: 0.8rem 1rem; font-size: 0.85rem; color: #444; text-decoration: none; display: flex; align-items: center; gap: 0.4rem; border-bottom: 2px solid transparent; }
     .header-menu-item:hover { color: #004a8d; }
-    .header-menu-item.active {
-      color: #004a8d;
-      font-weight: 600;
-      border-bottom-color: #004a8d;
-    }
-
-    /* =========================================
-       CONTEÚDO PRINCIPAL
-    ========================================= */
-    .main-container {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 1.5rem;
-      padding-bottom: 60px;
-      width: 100%;
-      flex: 1;
-    }
-
-    /* Cabeçalho da Página */
-    .page-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.5rem;
-    }
-
-    .page-title {
-      font-size: 1.5rem;
-      font-weight: 500;
-      color: #333;
-    }
-
-    .page-title i {
-      color: #555;
-      font-size: 1.2rem;
-      margin-right: 0.5rem;
-    }
-
-    .btn-voltar {
-      background-color: #004a8d;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      font-size: 0.85rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
+    .header-menu-item.active { color: #004a8d; font-weight: 600; border-bottom-color: #004a8d; }
+    .main-container { max-width: 1400px; margin: 0 auto; padding: 1.5rem; padding-bottom: 60px; width: 100%; flex: 1; }
+    .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+    .page-title { font-size: 1.5rem; font-weight: 500; color: #333; }
+    .page-title i { color: #555; font-size: 1.2rem; margin-right: 0.5rem; }
+    .btn-voltar { background-color: #004a8d; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; }
     .btn-voltar:hover { background-color: #00366a; }
-
-    /* Abas de Navegação */
-    .tabs {
-      display: flex;
-      border-bottom: 2px solid #004a8d;
-      margin-bottom: 1rem;
-    }
-
-    .tab {
-      padding: 0.75rem 1.5rem;
-      background-color: #f1f5f9;
-      border: 1px solid #cbd5e1;
-      border-bottom: none;
-      margin-right: 0.5rem;
-      border-radius: 4px 4px 0 0;
-      font-size: 0.85rem;
-      font-weight: 500;
-      color: #004a8d;
-      cursor: pointer;
-    }
-
-    .tab.active {
-      background-color: #004a8d;
-      color: white;
-      border-color: #004a8d;
-    }
-
-    /* Caixa de Alerta */
-    .alert-box {
-      background-color: #e0f2fe;
-      border: 1px solid #bae6fd;
-      color: #0369a1;
-      padding: 1rem;
-      border-radius: 4px;
-      font-size: 0.85rem;
-      margin-bottom: 1.5rem;
-      line-height: 1.4;
-    }
-
-    /* Formulário e Blocos */
-    .form-section {
-      background: white;
-      border: 1px solid #e2e8f0;
-      border-radius: 4px;
-      padding: 1.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .form-section-title {
-      font-size: 1rem;
-      color: #004a8d;
-      font-weight: 500;
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .form-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 1rem;
-    }
-
-    .col-12 { grid-column: span 12; }
-    .col-6 { grid-column: span 6; }
-    .col-4 { grid-column: span 4; }
-    .col-3 { grid-column: span 3; }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-
-    .form-group label {
-      font-size: 0.75rem;
-      color: #555;
-      font-weight: 500;
-    }
-
-    .form-group label span.required {
-      color: #dc2626; /* Asterisco Vermelho */
-    }
-
-    .form-group input,
-    .form-group select {
-      width: 100%;
-      padding: 0.6rem;
-      border: 1px solid #cbd5e1;
-      border-radius: 4px;
-      font-size: 0.85rem;
-      color: #333;
-      outline: none;
-      background-color: #fff;
-    }
-
-    /* Fundo cinza para os Selects, como na imagem */
-    .form-group select {
-      background-color: #f8f9fa;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus {
-      border-color: #3b82f6;
-    }
-
-    /* Campos com fundo rosa claro para obrigatórios */
-    .form-group input.obrigatorio {
-      background-color: #fef2f2;
-      border-color: #fca5a5;
-    }
-
-    .form-group input::placeholder {
-      color: #999;
-    }
-
-    /* =========================================
-       BOTÃO DE SUBMIT (RODAPÉ DO FORM)
-    ========================================= */
-    .form-actions {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 1rem;
-      padding-top: 1rem;
-    }
-
-    .btn-salvar {
-      background-color: #004a8d;
-      color: white;
-      border: none;
-      padding: 0.6rem 2rem;
-      border-radius: 4px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: background 0.2s;
-    }
-
-    .btn-salvar:hover {
-      background-color: #00366a;
-    }
-
-    /* =========================================
-       RODAPÉ
-    ========================================= */
-    footer {
-      background-color: #e2e8f0;
-      border-top: 3px solid #004a8d;
-      padding: 0.4rem 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.75rem;
-      color: #555;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      z-index: 10;
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 1.5rem;
-      align-items: center;
-    }
-
-    .footer-links a {
-      color: #555;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
+    .tabs { display: flex; border-bottom: 2px solid #004a8d; margin-bottom: 1rem; }
+    .tab { padding: 0.75rem 1.5rem; background-color: #f1f5f9; border: 1px solid #cbd5e1; border-bottom: none; margin-right: 0.5rem; border-radius: 4px 4px 0 0; font-size: 0.85rem; font-weight: 500; color: #004a8d; cursor: pointer; }
+    .tab.active { background-color: #004a8d; color: white; border-color: #004a8d; }
+    .alert-box { background-color: #e0f2fe; border: 1px solid #bae6fd; color: #0369a1; padding: 1rem; border-radius: 4px; font-size: 0.85rem; margin-bottom: 1.5rem; line-height: 1.4; }
+    .form-section { background: white; border: 1px solid #e2e8f0; border-radius: 4px; padding: 1.5rem; margin-bottom: 1rem; }
+    .form-section-title { font-size: 1rem; color: #004a8d; font-weight: 500; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+    .form-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 1rem; }
+    .col-12 { grid-column: span 12; } .col-6 { grid-column: span 6; } .col-4 { grid-column: span 4; } .col-3 { grid-column: span 3; } .col-2 { grid-column: span 2; }
+    .form-group { display: flex; flex-direction: column; gap: 0.3rem; }
+    .form-group label { font-size: 0.75rem; color: #555; font-weight: 500; }
+    .form-group input, .form-group select { width: 100%; padding: 0.6rem; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.85rem; color: #333; outline: none; background-color: #fff; }
+    .form-group select { background-color: #f8f9fa; }
+    .form-group input:focus, .form-group select:focus { border-color: #3b82f6; }
+    .form-group input::placeholder { color: #999; }
+    .form-actions { display: flex; justify-content: flex-end; margin-top: 1rem; padding-top: 1rem; }
+    .btn-salvar { background-color: #004a8d; color: white; border: none; padding: 0.6rem 2rem; border-radius: 4px; font-size: 0.9rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; transition: background 0.2s; }
+    .btn-salvar:hover { background-color: #00366a; }
+    footer { background-color: #e2e8f0; border-top: 3px solid #004a8d; padding: 0.4rem 1rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: #555; position: fixed; bottom: 0; width: 100%; z-index: 10; }
+    .footer-links { display: flex; gap: 1.5rem; align-items: center; }
+    .footer-links a { color: #555; text-decoration: none; display: flex; align-items: center; gap: 0.3rem; }
     .footer-links a:hover { color: #004a8d; }
-
-    /* Responsividade */
-    @media (max-width: 900px) {
-      .col-6, .col-4, .col-3 { grid-column: span 12; }
-      .tabs { flex-wrap: wrap; }
-      .tab { flex: 1; text-align: center; margin-bottom: 0.5rem; }
-    }
+    @media (max-width: 900px) { .col-6, .col-4, .col-3, .col-2 { grid-column: span 12; } .tabs { flex-wrap: wrap; } .tab { flex: 1; text-align: center; margin-bottom: 0.5rem; } }
   </style>
 </head>
 <body>
 
-  <!-- ================= HEADER TOP ================= -->
   <header class="header-top">
-    <div class="header-logo">
-      <div class="logo-text">
-        SGE <span>+</span>
-        <span class="logo-sub">SISTEMA DE GESTÃO ESCOLAR</span>
-      </div>
-    </div>
+    <div class="header-logo"><div class="logo-text">SGE <span>+</span><span class="logo-sub">SISTEMA DE GESTÃO ESCOLAR</span></div></div>
     <div class="header-right">
       <div class="header-icons">
         <i class="fa-solid fa-cake-candles" title="Aniversariantes"></i>
         <i class="fa-solid fa-envelope" title="Mensagens"></i>
         <i class="fa-solid fa-bell" title="Notificações"></i>
       </div>
-      <button class="btn-header">
-        <i class="fa-solid fa-table-cells-large"></i> Módulos
-      </button>
-      <button class="btn-header">
-        <i class="fa-solid fa-user"></i> KLEBER
-      </button>
+      <button class="btn-header"><i class="fa-solid fa-table-cells-large"></i> Módulos</button>
+      <button class="btn-header"><i class="fa-solid fa-user"></i> KLEBER</button>
       <div class="header-year">2026</div>
     </div>
   </header>
 
-  <!-- ================= SUBMENU ================= -->
   <nav class="header-menu">
-    <a href="index.html" class="header-menu-item">
-      <i class="fa-solid fa-arrows-rotate"></i> Administrativo
-    </a>
-    <a href="index.html" class="header-menu-item">
-      <i class="fa-solid fa-house"></i> Início
-    </a>
-    <a href="#" class="header-menu-item">
-      <i class="fa-solid fa-user-graduate"></i> Cadastros <i class="fa-solid fa-caret-down" style="font-size:0.7rem;"></i>
-    </a>
-    <a href="#" class="header-menu-item active">
-      <i class="fa-solid fa-user-check"></i> Matrícula <i class="fa-solid fa-caret-down" style="font-size:0.7rem;"></i>
-    </a>
-    <a href="#" class="header-menu-item">
-      <i class="fa-solid fa-users-gear"></i> Usuários <i class="fa-solid fa-caret-down" style="font-size:0.7rem;"></i>
-    </a>
-    <a href="#" class="header-menu-item">
-      <i class="fa-solid fa-chart-pie"></i> Planejamento Estratégico
-    </a>
-    <a href="#" class="header-menu-item">
-      <i class="fa-solid fa-file-signature"></i> Credenciamento
-    </a>
-    <a href="#" class="header-menu-item">
-      <i class="fa-solid fa-box"></i> Patrimônio
-    </a>
-    <a href="#" class="header-menu-item">
-      <i class="fa-solid fa-bus"></i> Transporte Escolar
-    </a>
-    <a href="#" class="header-menu-item">
-      <i class="fa-solid fa-file-lines"></i> Relatórios
-    </a>
+    <a href="index.html" class="header-menu-item"><i class="fa-solid fa-arrows-rotate"></i> Administrativo</a>
+    <a href="index.html" class="header-menu-item"><i class="fa-solid fa-house"></i> Início</a>
+    <a href="#" class="header-menu-item"><i class="fa-solid fa-user-graduate"></i> Cadastros <i class="fa-solid fa-caret-down" style="font-size:0.7rem;"></i></a>
+    <a href="#" class="header-menu-item active"><i class="fa-solid fa-user-check"></i> Matrícula <i class="fa-solid fa-caret-down" style="font-size:0.7rem;"></i></a>
+    <a href="#" class="header-menu-item"><i class="fa-solid fa-users-gear"></i> Usuários <i class="fa-solid fa-caret-down" style="font-size:0.7rem;"></i></a>
+    <a href="#" class="header-menu-item"><i class="fa-solid fa-chart-pie"></i> Planejamento Estratégico</a>
+    <a href="#" class="header-menu-item"><i class="fa-solid fa-file-signature"></i> Credenciamento</a>
+    <a href="#" class="header-menu-item"><i class="fa-solid fa-box"></i> Patrimônio</a>
+    <a href="#" class="header-menu-item"><i class="fa-solid fa-bus"></i> Transporte Escolar</a>
+    <a href="#" class="header-menu-item"><i class="fa-solid fa-file-lines"></i> Relatórios</a>
   </nav>
 
-  <!-- ================= CONTEÚDO PRINCIPAL ================= -->
   <main class="main-container">
-
-    <!-- Cabeçalho da Página -->
     <div class="page-header">
-      <h1 class="page-title"><i class="fa-solid fa-user-plus"></i> Cadastrar Estudante</h1>
-      <button class="btn-voltar" onclick="window.location.href='index.html'">
-        <i class="fa-solid fa-arrow-left"></i> Voltar
+      <!-- ID no título para alterar dinamicamente -->
+      <h1 class="page-title" id="titulo-pagina"><i class="fa-solid fa-user-plus"></i> Cadastrar Estudante</h1>
+      <button class="btn-voltar" onclick="window.location.href='Unit5.html'">
+        <i class="fa-solid fa-arrow-left"></i> Ir para Pesquisa
       </button>
     </div>
 
-    <!-- Abas -->
     <div class="tabs">
       <div class="tab active">1. Identificação</div>
       <div class="tab">2. Documentação</div>
@@ -433,193 +100,51 @@
       <div class="tab">5. Acessibilidades</div>
     </div>
 
-    <!-- Aviso -->
-    <div class="alert-box">
-      <strong>Todos os campos marcados em vermelho são OBRIGATÓRIOS.</strong><br>
+    <div class="alert-box" id="aviso-box">
+      <strong>Preencha os dados do estudante abaixo.</strong><br>
       Informações adicionais relativas aos campos podem ser vistas passando o mouse no ícone "?".
     </div>
 
-    <!-- Formulário -->
-    <form id="form-aluno" onsubmit="event.preventDefault(); alert('Estudante cadastrado com sucesso!');">
+    <form id="form-aluno" onsubmit="salvarAluno(event)">
+      <!-- Hidden para guardar a matrícula original em caso de edição -->
+      <input type="hidden" id="matriculaOriginal">
 
-      <!-- Bloco: Perfil do Estudante -->
       <div class="form-section">
-        <div class="form-section-title">
-          <i class="fa-solid fa-user"></i> Perfil do Estudante
-        </div>
-
+        <div class="form-section-title"><i class="fa-solid fa-user"></i> Perfil do Estudante</div>
         <div class="form-grid">
-          <div class="form-group col-3">
-            <label>Identificação Única</label>
-            <input type="text" id="identificacao">
-          </div>
-
-          <div class="form-group col-3">
-            <label>Matrícula SGE</label>
-            <input type="text" id="matricula">
-          </div>
-
-          <div class="form-group col-6">
-            <label>Nome Completo <span class="required">*</span></label>
-            <input type="text" id="nome" class="obrigatorio" required>
-          </div>
-
-          <div class="form-group col-6">
-            <label>Nome Social</label>
-            <input type="text" id="nomeSocial">
-          </div>
-
-          <div class="form-group col-3">
-            <label>Data de Nascimento <span class="required">*</span></label>
-            <input type="date" id="dataNascimento" class="obrigatorio" required>
-          </div>
-
+          <div class="form-group col-3"><label>Identificação Única</label><input type="text" id="identificacao"></div>
+          <div class="form-group col-3"><label>Matrícula SGE</label><input type="text" id="matricula"></div>
+          <div class="form-group col-6"><label>Nome Completo</label><input type="text" id="nome"></div>
+          <div class="form-group col-6"><label>Nome Social</label><input type="text" id="nomeSocial"></div>
+          <div class="form-group col-3"><label>Data de Nascimento</label><input type="date" id="dataNascimento"></div>
           <div class="form-group col-3">
             <label>Sexo</label>
-            <select id="sexo">
-              <option value="Masculino">Masculino</option>
-              <option value="Feminino">Feminino</option>
-            </select>
+            <select id="sexo"><option value="Masculino">Masculino</option><option value="Feminino">Feminino</option></select>
           </div>
-
           <div class="form-group col-6">
             <label>Cor ou Raça</label>
             <select id="raca">
-              <option value="Não declarada">Não declarada</option>
-              <option value="Branca">Branca</option>
-              <option value="Preta">Preta</option>
-              <option value="Parda">Parda</option>
-              <option value="Amarela">Amarela</option>
-              <option value="Indígena">Indígena</option>
+              <option value="Não declarada">Não declarada</option><option value="Branca">Branca</option><option value="Preta">Preta</option><option value="Parda">Parda</option><option value="Amarela">Amarela</option><option value="Indígena">Indígena</option>
             </select>
           </div>
         </div>
       </div>
 
-      <!-- Bloco: Filiação -->
       <div class="form-section">
-        <div class="form-section-title">
-          <i class="fa-solid fa-users"></i> Filiação
-        </div>
-
+        <div class="form-section-title"><i class="fa-solid fa-users"></i> Filiação</div>
         <div class="form-grid">
-          <div class="form-group col-6">
-            <label>Filiação 1 (preferencialmente o nome da mãe) <span class="required">*</span></label>
-            <input type="text" id="filiacao1" class="obrigatorio" required>
-          </div>
-
-          <div class="form-group col-6">
-            <label>Filiação 2 (preferencialmente o nome do pai)</label>
-            <input type="text" id="filiacao2">
-          </div>
+          <div class="form-group col-6"><label>Filiação 1 (preferencialmente o nome da mãe)</label><input type="text" id="filiacao1"></div>
+          <div class="form-group col-6"><label>Filiação 2 (preferencialmente o nome do pai)</label><input type="text" id="filiacao2"></div>
         </div>
       </div>
 
-      <!-- NOVO Bloco: Naturalidade e Origem -->
-      <div class="form-section">
-        <div class="form-section-title">
-          <i class="fa-solid fa-earth-americas"></i> Naturalidade e Origem
-        </div>
-
-        <div class="form-grid">
-          <div class="form-group col-3">
-            <label>Nacionalidade</label>
-            <select id="nacionalidade">
-              <option value="Brasileira">Brasileira</option>
-              <option value="Estrangeira">Estrangeira</option>
-            </select>
-          </div>
-
-          <div class="form-group col-3">
-            <label>País de Origem</label>
-            <select id="paisOrigem">
-              <option value="">Selecione...</option>
-              <option value="Brasil">Brasil</option>
-              <option value="Outro">Outro</option>
-            </select>
-          </div>
-
-          <div class="form-group col-2">
-            <label>Passaporte</label>
-            <input type="text" id="passaporte">
-          </div>
-
-          <div class="form-group col-2">
-            <label>Estado (nascimento)</label>
-            <select id="estadoNascimento">
-              <option value="">Selecione...</option>
-              <option value="AC">Acre</option>
-              <option value="AL">Alagoas</option>
-              <option value="AP">Amapá</option>
-              <option value="AM">Amazonas</option>
-              <option value="BA">Bahia</option>
-              <option value="CE">Ceará</option>
-              <option value="DF">Distrito Federal</option>
-              <option value="ES">Espírito Santo</option>
-              <option value="GO">Goiás</option>
-              <option value="MA">Maranhão</option>
-              <option value="MT">Mato Grosso</option>
-              <option value="MS">Mato Grosso do Sul</option>
-              <option value="MG">Minas Gerais</option>
-              <option value="PA">Pará</option>
-              <option value="PB">Paraíba</option>
-              <option value="PR">Paraná</option>
-              <option value="PE">Pernambuco</option>
-              <option value="PI">Piauí</option>
-              <option value="RJ">Rio de Janeiro</option>
-              <option value="RN">Rio Grande do Norte</option>
-              <option value="RS">Rio Grande do Sul</option>
-              <option value="RO">Rondônia</option>
-              <option value="RR">Roraima</option>
-              <option value="SC">Santa Catarina</option>
-              <option value="SP">São Paulo</option>
-              <option value="SE">Sergipe</option>
-              <option value="TO">Tocantins</option>
-            </select>
-          </div>
-
-          <div class="form-group col-2">
-            <label>Município (nascimento)</label>
-            <select id="municipioNascimento">
-              <option value="">Selecione...</option>
-              <option value="Maranhão">Maranhão</option>
-              <!-- Adicionar municípios via JS no futuro se necessário -->
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <!-- NOVO Bloco: Contato -->
-      <div class="form-section">
-        <div class="form-section-title">
-          <i class="fa-solid fa-phone"></i> Contato
-        </div>
-
-        <div class="form-grid">
-          <div class="form-group col-6">
-            <label>Telefone (celular)</label>
-            <input type="tel" id="telefoneCelular" placeholder="(XX) XXXXX-XXXX">
-          </div>
-
-          <div class="form-group col-6">
-            <label>Telefone (residencial)</label>
-            <input type="tel" id="telefoneResidencial" placeholder="(XX) XXXX-XXXX">
-          </div>
-        </div>
-      </div>
-
-      <!-- Botão Salvar -->
       <div class="form-actions">
-        <button type="submit" class="btn-salvar">
-          Cadastrar Estudante <i class="fa-solid fa-floppy-disk"></i>
-        </button>
+        <!-- ID no botão para alterar o texto dinamicamente -->
+        <button type="submit" class="btn-salvar" id="btn-submit">Cadastrar Estudante <i class="fa-solid fa-floppy-disk"></i></button>
       </div>
-
     </form>
-
   </main>
 
-  <!-- ================= RODAPÉ ================= -->
   <footer>
     <div class="footer-links">
       <a href="#"><i class="fa-solid fa-video"></i> Tutoriais</a>
@@ -628,10 +153,116 @@
       <a href="#"><i class="fa-solid fa-chart-line"></i> Política Especial de Recuperação da Aprendizagem</a>
       <a href="#"><i class="fa-solid fa-heart"></i> Qualidade de Vida</a>
     </div>
-    <div>
-      <span>SGE 13.8.5</span>
-    </div>
+    <div><span>SGE 13.8.5</span></div>
   </footer>
 
+  <script>
+    // Variável global para saber se estamos editando
+    let isEditando = false;
+
+    // Executa ao carregar a página: Verifica se há um parâmetro de edição na URL
+    window.onload = function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const matriculaEditar = urlParams.get('editar');
+
+      if (matriculaEditar) {
+        isEditando = true;
+
+        // Altera visual da tela
+        document.getElementById('titulo-pagina').innerHTML = '<i class="fa-solid fa-user-pen"></i> Editar Estudante';
+        document.getElementById('aviso-box').innerHTML = '<strong>Modo de Edição:</strong> Altere os dados abaixo e clique em Atualizar.';
+        document.getElementById('btn-submit').innerHTML = 'Atualizar Cadastro <i class="fa-solid fa-pen-to-square"></i>';
+
+        // Procura o aluno no localStorage
+        const alunosSalvos = JSON.parse(localStorage.getItem('alunosSGE')) || [];
+        let alunoParaEditar = alunosSalvos.find(a => a.matricula === matriculaEditar);
+
+        // Se o aluno não estiver no localStorage, pode ser o aluno fixo de exemplo
+        if (!alunoParaEditar && matriculaEditar === '100502') {
+          alunoParaEditar = {
+            matricula: '100502',
+            inep: '204318149615',
+            nome: 'MARIA HELENA MARQUES MAIA RODRIGUES',
+            nasc: '08/10/2018',
+            mae: 'MAIZA MARQUES MAIA',
+            sexo: 'Feminino'
+          };
+        }
+
+        // Preenche o formulário com os dados do aluno
+        if (alunoParaEditar) {
+          document.getElementById('matriculaOriginal').value = alunoParaEditar.matricula;
+          document.getElementById('matricula').value = alunoParaEditar.matricula;
+          document.getElementById('identificacao').value = alunoParaEditar.inep || '';
+          document.getElementById('nome').value = alunoParaEditar.nome;
+          document.getElementById('filiacao1').value = alunoParaEditar.mae;
+          document.getElementById('sexo').value = alunoParaEditar.sexo;
+
+          // Converte data de DD/MM/AAAA para AAAA-MM-DD para o input date
+          if (alunoParaEditar.nasc && alunoParaEditar.nasc !== '--/--/----') {
+            const [dia, mes, ano] = alunoParaEditar.nasc.split('/');
+            document.getElementById('dataNascimento').value = `${ano}-${mes}-${dia}`;
+          }
+        }
+      }
+    };
+
+    function salvarAluno(event) {
+      event.preventDefault();
+
+      // Pega os valores do formulário
+      const novoAluno = {
+        matricula: document.getElementById('matricula').value || '000000',
+        inep: document.getElementById('identificacao').value || '000000000000',
+        nome: document.getElementById('nome').value.toUpperCase(),
+        nasc: document.getElementById('dataNascimento').value,
+        mae: document.getElementById('filiacao1').value.toUpperCase(),
+        sexo: document.getElementById('sexo').value,
+        status: 'Ativo',
+        turma: 'HENBERT JOSE DE SOUZA BETINHO EMEF | 2ANO2026'
+      };
+
+      if(novoAluno.nome.trim() === '') {
+        alert('Por favor, preencha o Nome Completo do aluno.');
+        return;
+      }
+
+      // Formata data
+      if (novoAluno.nasc) {
+        const [ano, mes, dia] = novoAluno.nasc.split('-');
+        novoAluno.nasc = `${dia}/${mes}/${ano}`;
+      } else {
+        novoAluno.nasc = '--/--/----';
+      }
+
+      let alunos = JSON.parse(localStorage.getItem('alunosSGE')) || [];
+
+      if (isEditando) {
+        // MODO EDIÇÃO: Encontra o aluno original e substitui
+        const matOriginal = document.getElementById('matriculaOriginal').value;
+        const index = alunos.findIndex(a => a.matricula === matOriginal);
+
+        if (index !== -1) {
+          // Mantém a turma original se existia
+          novoAluno.turma = alunos[index].turma || novoAluno.turma;
+          alunos[index] = novoAluno;
+        } else {
+          // Se estava editando o aluno fixo, adiciona ele como novo na lista
+          alunos.unshift(novoAluno);
+        }
+
+        localStorage.setItem('alunosSGE', JSON.stringify(alunos));
+        alert(`Dados do estudante ${novoAluno.nome} atualizados com sucesso!`);
+        window.location.href = 'Unit5.html'; // Volta para a pesquisa
+
+      } else {
+        // MODO CRIAÇÃO: Adiciona um novo
+        alunos.unshift(novoAluno);
+        localStorage.setItem('alunosSGE', JSON.stringify(alunos));
+        alert(`Estudante ${novoAluno.nome} cadastrado com sucesso!\nEle já aparece na tela de pesquisa.`);
+        document.getElementById('form-aluno').reset();
+      }
+    }
+  </script>
 </body>
 </html>

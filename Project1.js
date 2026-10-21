@@ -43882,7 +43882,24 @@ rtl.module("Unit4",["System","SysUtils","Classes","JS","Web","WEBLib.Graphics","
   });
   this.Form4 = null;
 });
-rtl.module("program",["System","WEBLib.Forms","WEBLib.Forms","Unit1","Unit2","Unit3","Unit4"],function () {
+rtl.module("Unit5",["System","SysUtils","Classes","JS","Web","WEBLib.Graphics","WEBLib.Controls","WEBLib.Forms","WEBLib.Dialogs"],function () {
+  "use strict";
+  var $mod = this;
+  rtl.createClass(this,"TForm5",pas["WEBLib.Forms"].TForm,function () {
+    this.LoadDFMValues = function () {
+      pas["WEBLib.Forms"].TCustomForm.LoadDFMValues.call(this);
+      try {
+        this.SetName("Form5");
+        this.SetWidth(640);
+        this.SetHeight(480);
+      } finally {
+      };
+    };
+    rtl.addIntf(this,pas.System.IUnknown);
+  });
+  this.Form5 = null;
+});
+rtl.module("program",["System","WEBLib.Forms","WEBLib.Forms","Unit1","Unit2","Unit3","Unit4","Unit5"],function () {
   "use strict";
   var $mod = this;
   $mod.$implcode = function () {
@@ -43916,6 +43933,11 @@ rtl.module("program",["System","WEBLib.Forms","WEBLib.Forms","Unit1","Unit2","Un
         return this.p.Form4;
       }, set: function (v) {
         this.p.Form4 = v;
+      }});
+    pas["WEBLib.Forms"].Application.CreateForm(pas.Unit5.TForm5,{p: pas.Unit5, get: function () {
+        return this.p.Form5;
+      }, set: function (v) {
+        this.p.Form5 = v;
       }});
     pas["WEBLib.Forms"].Application.Run();
   };

@@ -1,0 +1,247 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TMS Web Project</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif; }
+      body { background-color: #f8f9fa; color: #333; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e2e8f0'%3E%3Cpath d='M21.5 11.5c0 3-2.5 5.5-5.5 5.5h-5c-1.5 0-2.8-.6-3.8-1.5l-2.7 2.7c-.4.4-1 .4-1.4 0-.4-.4-.4-1 0-1.4l2.3-2.3C4.5 13.1 4 11.8 4 10.5 4 7.5 6.5 5 9.5 5h6c3.3 0 6 2.7 6 6.5z'/%3E%3C/svg%3E"); background-size: 600px; background-position: bottom right; background-repeat: no-repeat; background-attachment: fixed; }
+      .header-top { background-color: #004a8d; color: white; display: flex; justify-content: space-between; align-items: center; padding: 0.4rem 1rem; font-size: 0.85rem; height: 48px; position: relative; z-index: 10; }
+      .header-logo { display: flex; align-items: center; gap: 0.5rem; font-weight: 700; font-size: 1.1rem; }
+      .header-logo i { color: #fff; font-size: 1.3rem; }
+      .header-logo .logo-text span { color: #ffcc00; }
+      .header-logo .logo-sub { font-size: 0.55rem; font-weight: 400; display: block; line-height: 1; }
+      .header-right { display: flex; align-items: center; gap: 1rem; }
+      .header-icons { display: flex; gap: 1rem; align-items: center; font-size: 1.1rem; }
+      .header-icons i { cursor: pointer; }
+      .header-icons .fa-cake-candles { color: #ffcc00; }
+      .btn-header { background: transparent; border: 1px solid rgba(255,255,255,0.4); color: white; padding: 0.3rem 0.75rem; border-radius: 4px; font-size: 0.75rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; transition: 0.2s; }
+      .btn-header:hover { background: rgba(255,255,255,0.1); }
+      .header-year { background: white; color: #004a8d; padding: 0.3rem 0.75rem; border-radius: 4px; font-weight: 700; font-size: 0.8rem; }
+      .header-menu { background-color: #fff; border-bottom: 2px solid #e0e0e0; display: flex; align-items: center; padding: 0 1rem; position: relative; z-index: 10; }
+      .header-menu-item { padding: 0.8rem 1rem; font-size: 0.85rem; color: #555; text-decoration: none; display: flex; align-items: center; gap: 0.4rem; border-bottom: 3px solid transparent; transition: 0.2s; cursor: pointer; }
+      .header-menu-item:hover { color: #004a8d; }
+      .header-menu-item.active { color: #004a8d; font-weight: 600; border-bottom-color: #004a8d; }
+      .header-menu-item i { font-size: 0.9rem; }
+      .main-container { max-width: 1200px; margin: 0 auto; padding: 1.5rem; width: 100%; flex: 1; position: relative; z-index: 1; }
+      .page-title { font-size: 0.9rem; font-weight: 700; color: #333; text-transform: uppercase; border-bottom: 2px solid #004a8d; padding-bottom: 0.5rem; margin-bottom: 1.5rem; display: inline-block; }
+      .form-card { background: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #ddd; margin-bottom: 1.5rem; }
+      .form-tabs { display: flex; background-color: #004a8d; }
+      .tab-btn { padding: 1rem 1.5rem; color: white; background: transparent; border: none; font-size: 0.85rem; font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 0.5rem; border-right: 1px solid rgba(255,255,255,0.1); }
+      .tab-btn.active { background-color: white; color: #004a8d; }
+      .form-body { padding: 2rem; border: 3px solid #004a8d; border-top: none; border-radius: 0 0 8px 8px; }
+      .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+      .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+      .form-group label { font-size: 0.75rem; font-weight: 500; color: #333; }
+      .form-control { padding: 0.6rem 0.75rem; border: 1px solid #ccc; border-radius: 4px; font-size: 0.85rem; color: #555; outline: none; transition: border-color 0.2s; }
+      .form-control:focus { border-color: #004a8d; }
+      select.form-control { appearance: none; background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23333%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"); background-repeat: no-repeat; background-position: right 0.75rem center; background-size: 0.6rem; }
+      .form-actions { display: flex; justify-content: flex-end; }
+      .btn-primary { background-color: #0056b3; color: white; border: none; padding: 0.6rem 1.5rem; border-radius: 4px; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; gap: 0.5rem; cursor: pointer; transition: background 0.2s; }
+      .btn-primary:hover { background-color: #004a8d; }
+      .results-card { display: none; background: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #ddd; animation: fadeIn 0.3s ease-in-out; }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+      .results-header { background-color: #004a8d; color: white; padding: 0.8rem 1rem; font-size: 0.85rem; font-weight: 500; }
+      .results-body { padding: 1.5rem; border: 3px solid #004a8d; border-top: none; border-radius: 0 0 8px 8px; }
+      .table-responsive { overflow-x: auto; }
+      table { width: 100%; border-collapse: collapse; font-size: 0.75rem; text-align: left; }
+      th { background-color: #f1f5f9; color: #333; font-weight: 500; padding: 0.6rem 0.5rem; border-bottom: 2px solid #e2e8f0; border-right: 1px solid #e2e8f0; white-space: nowrap; }
+      td { padding: 0.6rem 0.5rem; border-bottom: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; color: #555; vertical-align: middle; }
+      tr:last-child td { border-bottom: none; }
+      .badge-matricula { background-color: #64748b; color: white; padding: 0.2rem 0.5rem; border-radius: 12px; font-size: 0.65rem; font-weight: 500; display: inline-block; white-space: nowrap; }
+      .table-actions { display: flex; gap: 0.3rem; }
+      .btn-icon { background: transparent; border: none; cursor: pointer; font-size: 1rem; padding: 0.2rem; border-radius: 4px; }
+      .btn-icon.edit { color: #0056b3; }
+      .btn-icon.edit:hover { background-color: #e0f2fe; }
+      .btn-icon.check { color: #16a34a; }
+      .btn-icon.check:hover { background-color: #dcfce7; }
+      .btn-pendencias { position: fixed; bottom: 60px; right: 20px; width: 48px; height: 48px; background-color: #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.4rem; box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4); cursor: pointer; z-index: 100; transition: transform 0.2s; border: none; }
+      .btn-pendencias:hover { transform: scale(1.05); }
+      footer { background-color: #e2e8f0; border-top: 3px solid #004a8d; padding: 0.4rem 1rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: #555; position: fixed; bottom: 0; width: 100%; z-index: 10; }
+      .footer-links { display: flex; gap: 1.5rem; align-items: center; }
+      .footer-links a { color: #555; text-decoration: none; display: flex; align-items: center; gap: 0.3rem; }
+      .footer-links a:hover { color: #004a8d; }
+      @media (max-width: 768px) { .form-grid { grid-template-columns: 1fr; } .header-menu { display: none; } }
+    </style>
+  </head>
+  <body>
+
+    <header class="header-top">
+      <div class="header-logo"><i class="fa-solid fa-dove"></i><div class="logo-text">SGE <span>+</span><span class="logo-sub">SISTEMA DE GESTÃO ESCOLAR</span></div></div>
+      <div class="header-right">
+        <div class="header-icons">
+          <i class="fa-solid fa-cake-candles" title="Aniversariantes"></i>
+          <i class="fa-solid fa-envelope" title="Mensagens"></i>
+          <i class="fa-solid fa-bell" title="Notificações"></i>
+        </div>
+        <button class="btn-header"><i class="fa-solid fa-table-cells-large"></i> Módulos</button>
+        <button class="btn-header"><i class="fa-solid fa-user"></i> KLEBER</button>
+        <div class="header-year">2026</div>
+      </div>
+    </header>
+
+    <nav class="header-menu">
+      <a href="#" class="header-menu-item active"><i class="fa-solid fa-arrows-rotate"></i> Administrativo</a>
+      <a href="Unit3.html" class="header-menu-item"><i class="fa-solid fa-user-check"></i> Cadastrar Aluno</a>
+      <a href="#" class="header-menu-item"><i class="fa-solid fa-house"></i> Início</a>
+      <a href="#" class="header-menu-item"><i class="fa-solid fa-user-graduate"></i> Cadastros <i class="fa-solid fa-caret-down" style="font-size:0.7rem; margin-left:0.2rem;"></i></a>
+      <a href="#" class="header-menu-item"><i class="fa-solid fa-users-gear"></i> Usuários <i class="fa-solid fa-caret-down" style="font-size:0.7rem; margin-left:0.2rem;"></i></a>
+      <a href="#" class="header-menu-item"><i class="fa-solid fa-chart-pie"></i> Planejamento Estratégico</a>
+      <a href="#" class="header-menu-item"><i class="fa-solid fa-file-signature"></i> Credenciamento</a>
+      <a href="#" class="header-menu-item"><i class="fa-solid fa-box"></i> Patrimônio</a>
+      <a href="#" class="header-menu-item"><i class="fa-solid fa-bus"></i> Transporte Escolar</a>
+      <a href="#" class="header-menu-item"><i class="fa-solid fa-file-lines"></i> Relatórios</a>
+    </nav>
+
+    <main class="main-container">
+      <div class="page-title">Formulário de Pesquisa de Alunos</div>
+
+      <div class="form-card">
+        <div class="form-tabs">
+          <button class="tab-btn active"><i class="fa-solid fa-user"></i> Informações Pessoais</button>
+          <button class="tab-btn"><i class="fa-solid fa-id-card"></i> Documentos</button>
+        </div>
+        <div class="form-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Pesquisar em:</label>
+              <select class="form-control"><option>Escola</option><option>Rede Municipal</option><option>Rede Estadual</option></select>
+            </div>
+            <div class="form-group">
+              <label>Nome</label>
+              <input type="text" id="input-nome" class="form-control" placeholder="Digite o nome e clique em Pesquisar...">
+            </div>
+            <div class="form-group">
+              <label>Data de nascimento</label>
+              <input type="date" class="form-control">
+            </div>
+            <div class="form-group">
+              <label>Nome da Mãe</label>
+              <input type="text" class="form-control">
+            </div>
+          </div>
+          <div class="form-actions">
+            <button class="btn-primary" onclick="pesquisarAluno()"><i class="fa-solid fa-magnifying-glass"></i> Pesquisar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="results-card" id="tabela-resultados">
+        <div class="results-header">Tabela de Resultados por Informações Pessoais</div>
+        <div class="results-body">
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Matrícula (SGE)</th>
+                  <th>Inep</th>
+                  <th>Nome</th>
+                  <th>Nasc.</th>
+                  <th>Mãe</th>
+                  <th>Sexo</th>
+                  <th>Status</th>
+                  <th>Matriculado?</th>
+                  <th>Opções</th>
+                </tr>
+              </thead>
+              <tbody id="corpo-tabela">
+                <!-- As linhas serão inseridas aqui pelo JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <button class="btn-pendencias" title="Pendências"><i class="fa-solid fa-triangle-exclamation"></i></button>
+
+    <footer>
+      <div class="footer-links">
+        <a href="#"><i class="fa-solid fa-utensils"></i> Alimentação Escolar</a>
+        <a href="#"><i class="fa-solid fa-file-contract"></i> Política Especial de Recuperação da Aprendizagem</a>
+        <a href="#"><i class="fa-solid fa-heart"></i> Qualidade de Vida</a>
+      </div>
+      <div><span>SGE 13.8.5</span></div>
+    </footer>
+
+    <!-- SCRIPT DA PESQUISA -->
+    <script>
+      // Aluno fixo de exemplo (aparece sempre). Adicionamos um ID fixo para ele.
+      const alunoFixo = {
+        matricula: '100502',
+        inep: '204318149615',
+        nome: 'MARIA HELENA MARQUES MAIA RODRIGUES',
+        nasc: '08/10/2018',
+        mae: 'MAIZA MARQUES MAIA',
+        sexo: 'Feminino',
+        status: 'Ativo',
+        turma: 'HENBERT JOSE DE SOUZA BETINHO EMEF | 2ANO2026'
+      };
+
+      function pesquisarAluno() {
+        const termo = document.getElementById('input-nome').value.trim().toUpperCase();
+        const tabela = document.getElementById('tabela-resultados');
+        const tbody = document.getElementById('corpo-tabela');
+
+        tbody.innerHTML = '';
+
+        const alunosSalvos = JSON.parse(localStorage.getItem('alunosSGE')) || [];
+
+        let alunosParaMostrar = [...alunosSalvos];
+        if (termo === '' || alunoFixo.nome.includes(termo)) {
+            alunosParaMostrar.push(alunoFixo);
+        }
+
+        const resultados = alunosParaMostrar.filter(aluno =>
+            termo === '' || aluno.nome.includes(termo)
+        );
+
+        if (resultados.length > 0) {
+          resultados.forEach(aluno => {
+            const tr = document.createElement('tr');
+            // Passamos a matrícula como parâmetro para a função editarAluno
+            tr.innerHTML = `
+              <td>${aluno.matricula}</td>
+              <td>${aluno.inep}</td>
+              <td><strong>${aluno.nome}</strong></td>
+              <td>${aluno.nasc}</td>
+              <td>${aluno.mae}</td>
+              <td>${aluno.sexo}</td>
+              <td>${aluno.status}</td>
+              <td><span class="badge-matricula">${aluno.turma}</span></td>
+              <td>
+                <div class="table-actions">
+                  <!-- Ação de editar chama a função JS -->
+                  <button class="btn-icon edit" title="Editar" onclick="editarAluno('${aluno.matricula}')">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                  </button>
+                  <button class="btn-icon edit" title="Visualizar"><i class="fa-solid fa-file-lines"></i></button>
+                </div>
+                <div class="table-actions" style="margin-top: 4px;">
+                  <button class="btn-icon check" title="Confirmar"><i class="fa-solid fa-square-check"></i></button>
+                </div>
+              </td>
+            `;
+            tbody.appendChild(tr);
+          });
+
+          tabela.style.display = 'block';
+          setTimeout(() => {
+            tabela.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 100);
+        } else {
+          tabela.style.display = 'none';
+          alert("Nenhum aluno encontrado com esse nome.");
+        }
+      }
+
+      // Função que redireciona para a Unit3 levando a matrícula na URL
+      function editarAluno(matricula) {
+        window.location.href = 'Unit3.html?editar=' + matricula;
+      }
+    </script>
+  </body>
+</html>

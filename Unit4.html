@@ -475,17 +475,16 @@
 
     <!-- Menu Matrícula com Dropdown -->
     <div class="dropdown-container">
-      <!-- ALTERADO AQUI: href apontando para Unit3 -->
       <a href="Unit3.html" class="header-menu-item" id="matricula-btn">
         <i class="fa-solid fa-user-check"></i> Matrícula <i class="fa-solid fa-caret-down" style="font-size:0.7rem; margin-left:0.2rem;"></i>
       </a>
       <div class="dropdown-menu" id="matricula-dropdown">
-        <!-- ALTERADO AQUI: href apontando para Unit3 -->
         <a href="Unit3.html" class="dropdown-item" id="cadastro-link">
           Cadastro
           <i class="fa-solid fa-plus"></i>
         </a>
-        <a href="#" class="dropdown-item">
+        <!-- Pesquisa aponta para Unit5 -->
+        <a href="Unit5.html" class="dropdown-item" id="pesquisa-link">
           Pesquisa
           <i class="fa-solid fa-magnifying-glass"></i>
         </a>
@@ -626,6 +625,7 @@
     const matriculaBtn = document.getElementById('matricula-btn');
     const matriculaDropdown = document.getElementById('matricula-dropdown');
     const cadastroLink = document.getElementById('cadastro-link');
+    const pesquisaLink = document.getElementById('pesquisa-link');
 
     // Adiciona o evento de clique no botão Matrícula
     matriculaBtn.addEventListener('click', function(event) {
@@ -644,6 +644,12 @@
     cadastroLink.addEventListener('click', function() {
       matriculaDropdown.classList.remove('show');
       // O redirecionamento para Unit3.html acontece automaticamente pelo atributo href
+    });
+
+    // Fecha o dropdown quando clicar em Pesquisa para ir para Unit5
+    pesquisaLink.addEventListener('click', function() {
+      matriculaDropdown.classList.remove('show');
+      // O redirecionamento para Unit5.html acontece automaticamente pelo atributo href
     });
   </script>
 
