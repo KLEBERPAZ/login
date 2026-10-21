@@ -3,815 +3,635 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SGE · Gerenciar Alunos</title>
+  <title>SGE · Cadastrar Estudante</title>
+
+  <!-- Fonte e Ícones -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      font-family: 'Roboto', sans-serif;
     }
 
     body {
-      min-height: 100vh;
-      background: linear-gradient(145deg, #0f172a 0%, #1e293b 100%);
-      color: white;
-      padding: 2rem;
-    }
-
-    .container {
-      max-width: 1300px;
-      margin: 0 auto;
+      background-color: #f8f9fa;
+      color: #333;
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      min-height: 100vh;
     }
 
-    /* Header */
-    header {
+    /* =========================================
+       HEADER AZUL (TOPO)
+    ========================================= */
+    .header-top {
+      background-color: #004a8d;
+      color: white;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
+      padding: 0.4rem 1rem;
+      font-size: 0.85rem;
+      height: 48px;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .header-logo .logo-text span { color: #ffcc00; }
+    .header-logo .logo-sub { font-size: 0.55rem; font-weight: 400; display: block; line-height: 1; }
+
+    .header-right {
+      display: flex;
+      align-items: center;
       gap: 1rem;
     }
 
-    h1 {
-      font-size: 2rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
+    .header-icons {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      font-size: 1.1rem;
     }
 
-    h1 .destaque { color: #60a5fa; }
+    .header-icons i { cursor: pointer; }
+    .header-icons .fa-cake-candles { color: #ffcc00; }
 
-    .btn {
-      border: none;
-      padding: 0.75rem 1.25rem;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: inline-flex;
+    .btn-header {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.4);
+      color: white;
+      padding: 0.3rem 0.75rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      display: flex;
       align-items: center;
       gap: 0.5rem;
+      cursor: pointer;
+    }
+    .btn-header:hover { background: rgba(255,255,255,0.1); }
+
+    .header-year {
+      background: white;
+      color: #004a8d;
+      padding: 0.3rem 0.75rem;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.8rem;
     }
 
-    .btn-primary { background: #3b82f6; color: white; }
-    .btn-primary:hover { background: #2563eb; }
-    .btn-danger { background: #ef4444; color: white; }
-    .btn-danger:hover { background: #dc2626; }
-    .btn-edit { background: #f59e0b; color: white; }
-    .btn-edit:hover { background: #d97706; }
-    .btn-secondary { background: #334155; color: white; }
-    .btn-secondary:hover { background: #475569; }
-    .btn-print { background: #10b981; color: white; }
-    .btn-print:hover { background: #059669; }
-    .btn-sm { padding: 0.4rem 0.7rem; font-size: 0.85rem; }
-
-    /* Formulário em Blocos */
-    .form-card {
-      background: #1e293b;
-      border-radius: 12px;
-      padding: 2rem;
-      border: 1px solid #334155;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    /* =========================================
+       SUBMENU (Branco)
+    ========================================= */
+    .header-menu {
+      background-color: #fff;
+      border-bottom: 2px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      padding: 0 1rem;
+      white-space: nowrap;
+      overflow-x: auto;
     }
 
-    .form-header {
+    .header-menu-item {
+      padding: 0.8rem 1rem;
+      font-size: 0.85rem;
+      color: #444;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-bottom: 2px solid transparent;
+    }
+
+    .header-menu-item:hover { color: #004a8d; }
+    .header-menu-item.active {
+      color: #004a8d;
+      font-weight: 600;
+      border-bottom-color: #004a8d;
+    }
+
+    /* =========================================
+       CONTEÚDO PRINCIPAL
+    ========================================= */
+    .main-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      padding-bottom: 60px;
+      width: 100%;
+      flex: 1;
+    }
+
+    /* Cabeçalho da Página */
+    .page-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 1.5rem;
-      border-bottom: 1px solid #334155;
-      padding-bottom: 1rem;
     }
 
-    .form-header h2 {
-      font-size: 1.25rem;
-      color: #60a5fa;
+    .page-title {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: #333;
     }
 
-    .form-section {
-      border-top: 1px solid #334155;
-      padding-top: 1.5rem;
-      margin-top: 1.5rem;
+    .page-title i {
+      color: #555;
+      font-size: 1.2rem;
+      margin-right: 0.5rem;
     }
-    .form-section:first-of-type {
-      border-top: none;
-      margin-top: 0;
-      padding-top: 0;
+
+    .btn-voltar {
+      background-color: #004a8d;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-    .form-section-title {
-      font-size: 0.9rem;
-      color: #94a3b8;
-      font-weight: 700;
+    .btn-voltar:hover { background-color: #00366a; }
+
+    /* Abas de Navegação */
+    .tabs {
+      display: flex;
+      border-bottom: 2px solid #004a8d;
       margin-bottom: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+    }
+
+    .tab {
+      padding: 0.75rem 1.5rem;
+      background-color: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-bottom: none;
+      margin-right: 0.5rem;
+      border-radius: 4px 4px 0 0;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #004a8d;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      background-color: #004a8d;
+      color: white;
+      border-color: #004a8d;
+    }
+
+    /* Caixa de Alerta */
+    .alert-box {
+      background-color: #e0f2fe;
+      border: 1px solid #bae6fd;
+      color: #0369a1;
+      padding: 1rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.4;
+    }
+
+    /* Formulário e Blocos */
+    .form-section {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-section-title {
+      font-size: 1rem;
+      color: #004a8d;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .form-grid {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
-      gap: 1.5rem;
+      gap: 1rem;
     }
 
     .col-12 { grid-column: span 12; }
     .col-6 { grid-column: span 6; }
     .col-4 { grid-column: span 4; }
     .col-3 { grid-column: span 3; }
-    .col-2 { grid-column: span 2; }
 
-    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
 
     .form-group label {
-      font-size: 0.85rem;
-      color: #cbd5e1;
+      font-size: 0.75rem;
+      color: #555;
       font-weight: 500;
+    }
+
+    .form-group label span.required {
+      color: #dc2626; /* Asterisco Vermelho */
     }
 
     .form-group input,
     .form-group select {
       width: 100%;
-      padding: 0.7rem 0.9rem;
-      border-radius: 8px;
-      border: 1px solid #334155;
-      background: #0f172a;
-      color: white;
-      font-size: 0.95rem;
+      padding: 0.6rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      color: #333;
       outline: none;
-      transition: border 0.2s;
+      background-color: #fff;
+    }
+
+    /* Fundo cinza para os Selects, como na imagem */
+    .form-group select {
+      background-color: #f8f9fa;
     }
 
     .form-group input:focus,
-    .form-group select:focus { border-color: #3b82f6; }
-
-    /* Upload de foto */
-    .foto-upload {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+    .form-group select:focus {
+      border-color: #3b82f6;
     }
 
-    .foto-preview {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: #0f172a;
-      border: 2px dashed #334155;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      flex-shrink: 0;
-      color: #64748b;
-      font-size: 1.5rem;
+    /* Campos com fundo rosa claro para obrigatórios */
+    .form-group input.obrigatorio {
+      background-color: #fef2f2;
+      border-color: #fca5a5;
     }
 
-    .foto-preview img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .form-group input::placeholder {
+      color: #999;
     }
 
-    .foto-upload-actions {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-
-    .foto-upload-actions label { margin-bottom: 0; }
-    .foto-upload-actions input[type="file"] { display: none; }
-
-    .btn-upload {
-      background: #334155;
-      color: white;
-      padding: 0.5rem 0.9rem;
-      border-radius: 8px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-align: center;
-      transition: background 0.2s;
-    }
-
-    .btn-upload:hover { background: #475569; }
-
-    .btn-remover-foto {
-      background: transparent;
-      color: #fca5a5;
-      border: none;
-      font-size: 0.8rem;
-      cursor: pointer;
-      text-align: left;
-      padding: 0.2rem 0;
-    }
-
-    .btn-remover-foto:hover { text-decoration: underline; }
-
+    /* =========================================
+       BOTÃO DE SUBMIT (RODAPÉ DO FORM)
+    ========================================= */
     .form-actions {
       display: flex;
       justify-content: flex-end;
-      gap: 1rem;
-      margin-top: 2rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid #334155;
+      margin-top: 1rem;
+      padding-top: 1rem;
     }
 
-    /* Tabela */
-    .table-card {
-      background: #1e293b;
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid #334155;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    }
-
-    .table-header {
-      padding: 1.5rem;
-      border-bottom: 1px solid #334155;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .table-header h2 { font-size: 1.25rem; }
-
-    .table-wrapper {
-      overflow-x: auto;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      white-space: nowrap;
-    }
-
-    thead { background: #0f172a; }
-
-    th, td {
-      padding: 1rem;
-      text-align: left;
+    .btn-salvar {
+      background-color: #004a8d;
+      color: white;
+      border: none;
+      padding: 0.6rem 2rem;
+      border-radius: 4px;
       font-size: 0.9rem;
-    }
-
-    th {
-      color: #94a3b8;
-      font-weight: 600;
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    tbody tr {
-      border-top: 1px solid #334155;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
       transition: background 0.2s;
     }
 
-    tbody tr:hover { background: #293548; }
-
-    .empty {
-      padding: 3rem;
-      text-align: center;
-      color: #64748b;
+    .btn-salvar:hover {
+      background-color: #00366a;
     }
 
-    .actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
-
-    /* Avatar */
-    .avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 2px solid #334155;
-      display: block;
+    /* =========================================
+       RODAPÉ
+    ========================================= */
+    footer {
+      background-color: #e2e8f0;
+      border-top: 3px solid #004a8d;
+      padding: 0.4rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: #555;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      z-index: 10;
     }
 
-    .avatar-initials {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .footer-links a {
+      color: #555;
+      text-decoration: none;
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 0.95rem;
-      color: white;
-      border: 2px solid #334155;
+      gap: 0.3rem;
     }
+    .footer-links a:hover { color: #004a8d; }
 
+    /* Responsividade */
     @media (max-width: 900px) {
-      .col-6, .col-4, .col-3, .col-2 { grid-column: span 12; }
-      th, td { padding: 0.7rem 0.5rem; font-size: 0.8rem; }
-      .actions { flex-direction: column; }
+      .col-6, .col-4, .col-3 { grid-column: span 12; }
+      .tabs { flex-wrap: wrap; }
+      .tab { flex: 1; text-align: center; margin-bottom: 0.5rem; }
     }
-
-    /* ===== CSS de impressão ===== */
-    @media print {
-      @page { size: A4 landscape; margin: 1cm; }
-      body { background: white !important; color: #111 !important; padding: 0 !important; }
-      .container { max-width: 100%; gap: 0; }
-      header, .form-card, .actions, .btn, .table-header .btn { display: none !important; }
-
-      .print-info { display: block !important; font-size: 0.8rem; color: #555; margin-bottom: 1rem; border-bottom: 1px solid #999; padding-bottom: 0.5rem;}
-
-      .table-card { border: 1px solid #999 !important; box-shadow: none !important; border-radius: 0 !important; }
-      .table-header { display: none !important; } /* Esconde o título da tabela se quiser, ou deixe visível */
-      thead { background: #f1f5f9 !important; }
-      th, td {
-        color: #111 !important;
-        border: 1px solid #ccc !important;
-        padding: 0.4rem !important;
-        font-size: 0.75rem !important;
-        white-space: normal;
-      }
-      th { background: #e2e8f0 !important; font-size: 0.7rem !important; }
-      tbody tr:hover { background: transparent !important; }
-      .avatar, .avatar-initials {
-        width: 30px !important; height: 30px !important; font-size: 0.65rem !important;
-        border: 1px solid #999 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
-      }
-      th:last-child, td:last-child { display: none !important; } /* Esconde Ações */
-    }
-    .print-info { display: none; }
   </style>
 </head>
 <body>
-  <div class="container">
 
-    <header>
-      <h1>SGE · <span class="destaque">Alunos</span></h1>
-      <div class="header-actions">
-        <button class="btn btn-print" onclick="imprimirTodos()">🖨️ Imprimir Lista PDF</button>
-      </div>
-    </header>
-
-    <div class="print-info" id="print-info"></div>
-
-    <!-- FORMULÁRIO DE CADASTRO -->
-    <div class="form-card">
-      <div class="form-header">
-        <h2 id="form-title">Novo Cadastro de Aluno</h2>
-        <button class="btn btn-secondary btn-sm" id="btn-cancelar-edicao" style="display:none;" onclick="cancelarEdicao()">Cancelar Edição</button>
-      </div>
-
-      <form id="form-aluno" onsubmit="salvar(event)">
-        <input type="hidden" id="aluno-id">
-        <input type="hidden" id="foto-base64">
-
-        <!-- BLOCO 1: DADOS PESSOAIS -->
-        <div class="form-section">
-          <div class="form-section-title">1. Dados Pessoais e Filiação</div>
-          <div class="form-grid">
-
-            <div class="col-12" style="margin-bottom: 0.5rem;">
-              <label style="font-size:0.85rem; color:#cbd5e1; font-weight:500; margin-bottom:0.4rem; display:block;">Foto do Aluno</label>
-              <div class="foto-upload">
-                <div class="foto-preview" id="foto-preview">👤</div>
-                <div class="foto-upload-actions">
-                  <label for="foto-input" class="btn-upload">📷 Escolher foto</label>
-                  <input type="file" id="foto-input" accept="image/*" onchange="processarFoto(event)">
-                  <button type="button" class="btn-remover-foto" id="btn-remover-foto" onclick="removerFoto()" style="display:none;">Remover foto</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group col-6">
-              <label>Nome Completo</label>
-              <input type="text" id="nome" placeholder="Ex: Maria Oliveira">
-            </div>
-            <div class="form-group col-3">
-              <label>Matrícula SGE</label>
-              <input type="text" id="matricula" placeholder="Ex: 2024001">
-            </div>
-            <div class="form-group col-3">
-              <label>Data de Nascimento</label>
-              <input type="date" id="dataNascimento">
-            </div>
-
-            <div class="form-group col-4">
-              <label>Sexo</label>
-              <select id="sexo">
-                <option value="">Não informado</option>
-                <option value="Masculino">Masculino</option>
-                <option value="Feminino">Feminino</option>
-                <option value="Outro">Outro</option>
-              </select>
-            </div>
-            <div class="form-group col-4">
-              <label>Cor ou Raça</label>
-              <select id="raca">
-                <option value="">Não informado</option>
-                <option value="Branca">Branca</option>
-                <option value="Preta">Preta</option>
-                <option value="Parda">Parda</option>
-                <option value="Amarela">Amarela</option>
-                <option value="Indígena">Indígena</option>
-                <option value="Não declarada">Não declarada</option>
-              </select>
-            </div>
-            <div class="form-group col-4">
-              <label>Nacionalidade</label>
-              <select id="nacionalidade">
-                <option value="Brasileira">Brasileira</option>
-                <option value="Estrangeira">Estrangeira</option>
-              </select>
-            </div>
-
-            <div class="form-group col-6">
-              <label>Filiação 1 (Mãe)</label>
-              <input type="text" id="filiacao1" placeholder="Nome da mãe">
-            </div>
-            <div class="form-group col-6">
-              <label>Filiação 2 (Pai)</label>
-              <input type="text" id="filiacao2" placeholder="Nome do pai (opcional)">
-            </div>
-
-          </div>
-        </div>
-
-        <!-- BLOCO 2: NATURALIDADE E CONTATO -->
-        <div class="form-section">
-          <div class="form-section-title">2. Origem e Contato</div>
-          <div class="form-grid">
-            <div class="form-group col-3">
-              <label>Estado (UF)</label>
-              <select id="estado">
-                <option value="">Selecione...</option>
-                <option value="AC">Acre</option>
-                <option value="AL">Alagoas</option>
-                <option value="AP">Amapá</option>
-                <option value="AM">Amazonas</option>
-                <option value="BA">Bahia</option>
-                <option value="CE">Ceará</option>
-                <option value="DF">Distrito Federal</option>
-                <option value="ES">Espírito Santo</option>
-                <option value="GO">Goiás</option>
-                <option value="MA">Maranhão</option>
-                <option value="MT">Mato Grosso</option>
-                <option value="MS">Mato Grosso do Sul</option>
-                <option value="MG">Minas Gerais</option>
-                <option value="PA">Pará</option>
-                <option value="PB">Paraíba</option>
-                <option value="PR">Paraná</option>
-                <option value="PE">Pernambuco</option>
-                <option value="PI">Piauí</option>
-                <option value="RJ">Rio de Janeiro</option>
-                <option value="RN">Rio Grande do Norte</option>
-                <option value="RS">Rio Grande do Sul</option>
-                <option value="RO">Rondônia</option>
-                <option value="RR">Roraima</option>
-                <option value="SC">Santa Catarina</option>
-                <option value="SP">São Paulo</option>
-                <option value="SE">Sergipe</option>
-                <option value="TO">Tocantins</option>
-              </select>
-            </div>
-            <div class="form-group col-3">
-              <label>Município (Nascimento)</label>
-              <input type="text" id="municipio" placeholder="Ex: São Paulo">
-            </div>
-            <div class="form-group col-3">
-              <label>Telefone Celular</label>
-              <input type="tel" id="telefoneCelular" placeholder="(XX) XXXXX-XXXX">
-            </div>
-            <div class="form-group col-3">
-              <label>Telefone Residencial</label>
-              <input type="tel" id="telefoneResidencial" placeholder="(XX) XXXX-XXXX">
-            </div>
-          </div>
-        </div>
-
-        <div class="form-actions">
-          <button type="button" class="btn btn-secondary" onclick="cancelarEdicao()">Limpar</button>
-          <button type="submit" class="btn btn-primary" id="btn-salvar">Salvar Aluno</button>
-        </div>
-      </form>
-    </div>
-
-    <!-- TABELA DE ALUNOS -->
-    <div class="table-card">
-      <div class="table-header">
-        <h2>Alunos Cadastrados</h2>
-        <span id="contador-alunos" style="font-size: 0.9rem; color: #94a3b8;">0 registros</span>
-      </div>
-      <div class="table-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th>Foto</th>
-              <th>Nome Completo</th>
-              <th>Matrícula</th>
-              <th>Nasc.</th>
-              <th>Sexo</th>
-              <th>Raça</th>
-              <th>Nacionalidade</th>
-              <th>Estado</th>
-              <th>Município</th>
-              <th>Filiação 1</th>
-              <th>Filiação 2</th>
-              <th>Celular</th>
-              <th>Residencial</th>
-              <th>Ações</th>
-            </tr>
-          </thead>
-          <tbody id="tabela-body"></tbody>
-        </table>
+  <!-- ================= HEADER TOP ================= -->
+  <header class="header-top">
+    <div class="header-logo">
+      <div class="logo-text">
+        SGE <span>+</span>
+        <span class="logo-sub">SISTEMA DE GESTÃO ESCOLAR</span>
       </div>
     </div>
+    <div class="header-right">
+      <div class="header-icons">
+        <i class="fa-solid fa-cake-candles" title="Aniversariantes"></i>
+        <i class="fa-solid fa-envelope" title="Mensagens"></i>
+        <i class="fa-solid fa-bell" title="Notificações"></i>
+      </div>
+      <button class="btn-header">
+        <i class="fa-solid fa-table-cells-large"></i> Módulos
+      </button>
+      <button class="btn-header">
+        <i class="fa-solid fa-user"></i> KLEBER
+      </button>
+      <div class="header-year">2026</div>
+    </div>
+  </header>
 
-  </div>
+  <!-- ================= SUBMENU ================= -->
+  <nav class="header-menu">
+    <a href="index.html" class="header-menu-item">
+      <i class="fa-solid fa-arrows-rotate"></i> Administrativo
+    </a>
+    <a href="index.html" class="header-menu-item">
+      <i class="fa-solid fa-house"></i> Início
+    </a>
+    <a href="#" class="header-menu-item">
+      <i class="fa-solid fa-user-graduate"></i> Cadastros <i class="fa-solid fa-caret-down" style="font-size:0.7rem;"></i>
+    </a>
+    <a href="#" class="header-menu-item active">
+      <i class="fa-solid fa-user-check"></i> Matrícula <i class="fa-solid fa-caret-down" style="font-size:0.7rem;"></i>
+    </a>
+    <a href="#" class="header-menu-item">
+      <i class="fa-solid fa-users-gear"></i> Usuários <i class="fa-solid fa-caret-down" style="font-size:0.7rem;"></i>
+    </a>
+    <a href="#" class="header-menu-item">
+      <i class="fa-solid fa-chart-pie"></i> Planejamento Estratégico
+    </a>
+    <a href="#" class="header-menu-item">
+      <i class="fa-solid fa-file-signature"></i> Credenciamento
+    </a>
+    <a href="#" class="header-menu-item">
+      <i class="fa-solid fa-box"></i> Patrimônio
+    </a>
+    <a href="#" class="header-menu-item">
+      <i class="fa-solid fa-bus"></i> Transporte Escolar
+    </a>
+    <a href="#" class="header-menu-item">
+      <i class="fa-solid fa-file-lines"></i> Relatórios
+    </a>
+  </nav>
 
-  <script>
-    // ===== Estado =====
-    let alunos = JSON.parse(localStorage.getItem('sge_alunos')) || [];
-    let editandoId = null;
-    let filtroImpressao = null;
+  <!-- ================= CONTEÚDO PRINCIPAL ================= -->
+  <main class="main-container">
 
-    // ===== Persistência =====
-    function persistir() {
-      try {
-        localStorage.setItem('sge_alunos', JSON.stringify(alunos));
-      } catch (e) {
-        alert('Não foi possível salvar. As fotos podem estar ocupando muito espaço do localStorage. Tente fotos menores.');
-      }
-    }
+    <!-- Cabeçalho da Página -->
+    <div class="page-header">
+      <h1 class="page-title"><i class="fa-solid fa-user-plus"></i> Cadastrar Estudante</h1>
+      <button class="btn-voltar" onclick="window.location.href='index.html'">
+        <i class="fa-solid fa-arrow-left"></i> Voltar
+      </button>
+    </div>
 
-    // ===== Render Tabela =====
-    function render() {
-      const tbody = document.getElementById('tabela-body');
-      const contador = document.getElementById('contador-alunos');
-      const lista = filtroImpressao ? alunos.filter(a => a.id === filtroImpressao) : alunos;
+    <!-- Abas -->
+    <div class="tabs">
+      <div class="tab active">1. Identificação</div>
+      <div class="tab">2. Documentação</div>
+      <div class="tab">3. Saúde</div>
+      <div class="tab">4. Responsáveis</div>
+      <div class="tab">5. Acessibilidades</div>
+    </div>
 
-      contador.textContent = `${lista.length} registro(s)`;
+    <!-- Aviso -->
+    <div class="alert-box">
+      <strong>Todos os campos marcados em vermelho são OBRIGATÓRIOS.</strong><br>
+      Informações adicionais relativas aos campos podem ser vistas passando o mouse no ícone "?".
+    </div>
 
-      if (lista.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="14" class="empty">Nenhum aluno cadastrado ainda.</td></tr>`;
-        return;
-      }
+    <!-- Formulário -->
+    <form id="form-aluno" onsubmit="event.preventDefault(); alert('Estudante cadastrado com sucesso!');">
 
-      tbody.innerHTML = lista.map(a => `
-        <tr>
-          <td>${renderAvatar(a)}</td>
-          <td>${escapeHtml(a.nome) || 'Sem nome'}</td>
-          <td>${escapeHtml(a.matricula) || '-'}</td>
-          <td>${a.dataNascimento ? formatarData(a.dataNascimento) : '-'}</td>
-          <td>${escapeHtml(a.sexo) || '-'}</td>
-          <td>${escapeHtml(a.raca) || '-'}</td>
-          <td>${escapeHtml(a.nacionalidade) || '-'}</td>
-          <td>${escapeHtml(a.estado) || '-'}</td>
-          <td>${escapeHtml(a.municipio) || '-'}</td>
-          <td>${escapeHtml(a.filiacao1) || '-'}</td>
-          <td>${escapeHtml(a.filiacao2) || '-'}</td>
-          <td>${escapeHtml(a.telefoneCelular) || '-'}</td>
-          <td>${escapeHtml(a.telefoneResidencial) || '-'}</td>
-          <td>
-            <div class="actions">
-              <button class="btn btn-edit btn-sm" onclick="editar(${a.id})">✏️ Editar</button>
-              <button class="btn btn-danger btn-sm" onclick="excluir(${a.id})">🗑️ Excluir</button>
-              <button class="btn btn-print btn-sm" onclick="imprimirUm(${a.id})" title="Imprimir apenas este registro">🖨️ PDF</button>
-            </div>
-          </td>
-        </tr>
-      `).join('');
-    }
+      <!-- Bloco: Perfil do Estudante -->
+      <div class="form-section">
+        <div class="form-section-title">
+          <i class="fa-solid fa-user"></i> Perfil do Estudante
+        </div>
 
-    function renderAvatar(a) {
-      if (a.foto) {
-        return `<img src="${a.foto}" alt="Foto de ${escapeHtml(a.nome)}" class="avatar">`;
-      }
-      const iniciais = getIniciais(a.nome || '?');
-      const cor = corPorNome(a.nome || '?');
-      return `<div class="avatar-initials" style="background:${cor}">${iniciais}</div>`;
-    }
+        <div class="form-grid">
+          <div class="form-group col-3">
+            <label>Identificação Única</label>
+            <input type="text" id="identificacao">
+          </div>
 
-    function getIniciais(nome) {
-      const partes = String(nome).trim().split(/\s+/);
-      if (partes.length === 1) return partes[0].substring(0, 2).toUpperCase();
-      return (partes[0][0] + partes[partes.length - 1][0]).toUpperCase();
-    }
+          <div class="form-group col-3">
+            <label>Matrícula SGE</label>
+            <input type="text" id="matricula">
+          </div>
 
-    function corPorNome(nome) {
-      let hash = 0;
-      for (let i = 0; i < nome.length; i++) hash = nome.charCodeAt(i) + ((hash << 5) - hash);
-      const cores = ['#3b82f6', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981', '#ef4444', '#06b6d4'];
-      return cores[Math.abs(hash) % cores.length];
-    }
+          <div class="form-group col-6">
+            <label>Nome Completo <span class="required">*</span></label>
+            <input type="text" id="nome" class="obrigatorio" required>
+          </div>
 
-    function formatarData(dataString) {
-      if (!dataString) return '-';
-      const [ano, mes, dia] = dataString.split('-');
-      return `${dia}/${mes}/${ano}`;
-    }
+          <div class="form-group col-6">
+            <label>Nome Social</label>
+            <input type="text" id="nomeSocial">
+          </div>
 
-    // ===== Formulário =====
-    function preencherFormulario(aluno) {
-      document.getElementById('aluno-id').value = aluno.id;
-      document.getElementById('nome').value = aluno.nome || '';
-      document.getElementById('matricula').value = aluno.matricula || '';
-      document.getElementById('dataNascimento').value = aluno.dataNascimento || '';
-      document.getElementById('sexo').value = aluno.sexo || '';
-      document.getElementById('raca').value = aluno.raca || '';
-      document.getElementById('nacionalidade').value = aluno.nacionalidade || 'Brasileira';
-      document.getElementById('filiacao1').value = aluno.filiacao1 || '';
-      document.getElementById('filiacao2').value = aluno.filiacao2 || '';
-      document.getElementById('estado').value = aluno.estado || '';
-      document.getElementById('municipio').value = aluno.municipio || '';
-      document.getElementById('telefoneCelular').value = aluno.telefoneCelular || '';
-      document.getElementById('telefoneResidencial').value = aluno.telefoneResidencial || '';
-      document.getElementById('foto-base64').value = aluno.foto || '';
-      atualizarPreview(aluno.foto || null);
-    }
+          <div class="form-group col-3">
+            <label>Data de Nascimento <span class="required">*</span></label>
+            <input type="date" id="dataNascimento" class="obrigatorio" required>
+          </div>
 
-    function cancelarEdicao() {
-      document.getElementById('form-aluno').reset();
-      document.getElementById('aluno-id').value = '';
-      document.getElementById('foto-base64').value = '';
-      atualizarPreview(null);
-      editandoId = null;
+          <div class="form-group col-3">
+            <label>Sexo</label>
+            <select id="sexo">
+              <option value="Masculino">Masculino</option>
+              <option value="Feminino">Feminino</option>
+            </select>
+          </div>
 
-      document.getElementById('form-title').textContent = 'Novo Cadastro de Aluno';
-      document.getElementById('btn-salvar').textContent = 'Salvar Aluno';
-      document.getElementById('btn-cancelar-edicao').style.display = 'none';
-    }
+          <div class="form-group col-6">
+            <label>Cor ou Raça</label>
+            <select id="raca">
+              <option value="Não declarada">Não declarada</option>
+              <option value="Branca">Branca</option>
+              <option value="Preta">Preta</option>
+              <option value="Parda">Parda</option>
+              <option value="Amarela">Amarela</option>
+              <option value="Indígena">Indígena</option>
+            </select>
+          </div>
+        </div>
+      </div>
 
-    // ===== Foto =====
-    function processarFoto(event) {
-      const file = event.target.files[0];
-      if (!file) return;
+      <!-- Bloco: Filiação -->
+      <div class="form-section">
+        <div class="form-section-title">
+          <i class="fa-solid fa-users"></i> Filiação
+        </div>
 
-      if (!file.type.startsWith('image/')) {
-        alert('Por favor, selecione um arquivo de imagem.');
-        event.target.value = '';
-        return;
-      }
+        <div class="form-grid">
+          <div class="form-group col-6">
+            <label>Filiação 1 (preferencialmente o nome da mãe) <span class="required">*</span></label>
+            <input type="text" id="filiacao1" class="obrigatorio" required>
+          </div>
 
-      if (file.size > 2 * 1024 * 1024) {
-        alert('A imagem é muito grande. Escolha uma foto com até 2MB.');
-        event.target.value = '';
-        return;
-      }
+          <div class="form-group col-6">
+            <label>Filiação 2 (preferencialmente o nome do pai)</label>
+            <input type="text" id="filiacao2">
+          </div>
+        </div>
+      </div>
 
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const base64 = e.target.result;
-        document.getElementById('foto-base64').value = base64;
-        atualizarPreview(base64);
-      };
-      reader.readAsDataURL(file);
-    }
+      <!-- NOVO Bloco: Naturalidade e Origem -->
+      <div class="form-section">
+        <div class="form-section-title">
+          <i class="fa-solid fa-earth-americas"></i> Naturalidade e Origem
+        </div>
 
-    function atualizarPreview(base64) {
-      const preview = document.getElementById('foto-preview');
-      const btnRemover = document.getElementById('btn-remover-foto');
+        <div class="form-grid">
+          <div class="form-group col-3">
+            <label>Nacionalidade</label>
+            <select id="nacionalidade">
+              <option value="Brasileira">Brasileira</option>
+              <option value="Estrangeira">Estrangeira</option>
+            </select>
+          </div>
 
-      if (base64) {
-        preview.innerHTML = `<img src="${base64}" alt="Pré-visualização">`;
-        btnRemover.style.display = 'block';
-      } else {
-        preview.innerHTML = '👤';
-        btnRemover.style.display = 'none';
-      }
-    }
+          <div class="form-group col-3">
+            <label>País de Origem</label>
+            <select id="paisOrigem">
+              <option value="">Selecione...</option>
+              <option value="Brasil">Brasil</option>
+              <option value="Outro">Outro</option>
+            </select>
+          </div>
 
-    function removerFoto() {
-      document.getElementById('foto-base64').value = '';
-      document.getElementById('foto-input').value = '';
-      atualizarPreview(null);
-    }
+          <div class="form-group col-2">
+            <label>Passaporte</label>
+            <input type="text" id="passaporte">
+          </div>
 
-    // ===== Máscaras de Telefone =====
-    function mascaraTelefone(input) {
-      input.addEventListener('input', function(e) {
-        let v = e.target.value.replace(/\D/g, '');
-        if (v.length > 11) v = v.slice(0, 11);
-        if (v.length > 0) {
-          v = v.replace(/^(\d{2})(\d)/g, '($1) $2');
-          v = v.replace(/(\d)(\d{4})$/, '$1-$2');
-        }
-        e.target.value = v;
-      });
-    }
-    mascaraTelefone(document.getElementById('telefoneCelular'));
-    mascaraTelefone(document.getElementById('telefoneResidencial'));
+          <div class="form-group col-2">
+            <label>Estado (nascimento)</label>
+            <select id="estadoNascimento">
+              <option value="">Selecione...</option>
+              <option value="AC">Acre</option>
+              <option value="AL">Alagoas</option>
+              <option value="AP">Amapá</option>
+              <option value="AM">Amazonas</option>
+              <option value="BA">Bahia</option>
+              <option value="CE">Ceará</option>
+              <option value="DF">Distrito Federal</option>
+              <option value="ES">Espírito Santo</option>
+              <option value="GO">Goiás</option>
+              <option value="MA">Maranhão</option>
+              <option value="MT">Mato Grosso</option>
+              <option value="MS">Mato Grosso do Sul</option>
+              <option value="MG">Minas Gerais</option>
+              <option value="PA">Pará</option>
+              <option value="PB">Paraíba</option>
+              <option value="PR">Paraná</option>
+              <option value="PE">Pernambuco</option>
+              <option value="PI">Piauí</option>
+              <option value="RJ">Rio de Janeiro</option>
+              <option value="RN">Rio Grande do Norte</option>
+              <option value="RS">Rio Grande do Sul</option>
+              <option value="RO">Rondônia</option>
+              <option value="RR">Roraima</option>
+              <option value="SC">Santa Catarina</option>
+              <option value="SP">São Paulo</option>
+              <option value="SE">Sergipe</option>
+              <option value="TO">Tocantins</option>
+            </select>
+          </div>
 
-    // ===== Criar / Atualizar =====
-    function salvar(event) {
-      event.preventDefault();
+          <div class="form-group col-2">
+            <label>Município (nascimento)</label>
+            <select id="municipioNascimento">
+              <option value="">Selecione...</option>
+              <option value="Maranhão">Maranhão</option>
+              <!-- Adicionar municípios via JS no futuro se necessário -->
+            </select>
+          </div>
+        </div>
+      </div>
 
-      const nome = document.getElementById('nome').value.trim();
-      const matricula = document.getElementById('matricula').value.trim();
-      const dataNascimento = document.getElementById('dataNascimento').value;
-      const sexo = document.getElementById('sexo').value;
-      const raca = document.getElementById('raca').value;
-      const nacionalidade = document.getElementById('nacionalidade').value;
-      const filiacao1 = document.getElementById('filiacao1').value.trim();
-      const filiacao2 = document.getElementById('filiacao2').value.trim();
-      const estado = document.getElementById('estado').value;
-      const municipio = document.getElementById('municipio').value.trim();
-      const telefoneCelular = document.getElementById('telefoneCelular').value.trim();
-      const telefoneResidencial = document.getElementById('telefoneResidencial').value.trim();
-      const foto = document.getElementById('foto-base64').value;
+      <!-- NOVO Bloco: Contato -->
+      <div class="form-section">
+        <div class="form-section-title">
+          <i class="fa-solid fa-phone"></i> Contato
+        </div>
 
-      if (editandoId) {
-        alunos = alunos.map(a =>
-          a.id === editandoId ? { ...a, nome, matricula, dataNascimento, sexo, raca, nacionalidade, filiacao1, filiacao2, estado, municipio, telefoneCelular, telefoneResidencial, foto } : a
-        );
-      } else {
-        const novo = {
-          id: Date.now(),
-          nome, matricula, dataNascimento, sexo, raca, nacionalidade, filiacao1, filiacao2, estado, municipio, telefoneCelular, telefoneResidencial, foto
-        };
-        alunos.push(novo);
-      }
+        <div class="form-grid">
+          <div class="form-group col-6">
+            <label>Telefone (celular)</label>
+            <input type="tel" id="telefoneCelular" placeholder="(XX) XXXXX-XXXX">
+          </div>
 
-      persistir();
-      render();
-      cancelarEdicao();
-    }
+          <div class="form-group col-6">
+            <label>Telefone (residencial)</label>
+            <input type="tel" id="telefoneResidencial" placeholder="(XX) XXXX-XXXX">
+          </div>
+        </div>
+      </div>
 
-    // ===== Editar =====
-    function editar(id) {
-      const aluno = alunos.find(a => a.id === id);
-      if (aluno) {
-        editandoId = aluno.id;
-        preencherFormulario(aluno);
+      <!-- Botão Salvar -->
+      <div class="form-actions">
+        <button type="submit" class="btn-salvar">
+          Cadastrar Estudante <i class="fa-solid fa-floppy-disk"></i>
+        </button>
+      </div>
 
-        document.getElementById('form-title').textContent = 'Editando Aluno';
-        document.getElementById('btn-salvar').textContent = 'Atualizar Cadastro';
-        document.getElementById('btn-cancelar-edicao').style.display = 'inline-block';
+    </form>
 
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    }
+  </main>
 
-    // ===== Excluir =====
-    function excluir(id) {
-      const aluno = alunos.find(a => a.id === id);
-      if (!aluno) return;
+  <!-- ================= RODAPÉ ================= -->
+  <footer>
+    <div class="footer-links">
+      <a href="#"><i class="fa-solid fa-video"></i> Tutoriais</a>
+      <a href="#"><i class="fa-solid fa-book"></i> BCM</a>
+      <a href="#"><i class="fa-solid fa-book"></i> Formar Integralmente</a>
+      <a href="#"><i class="fa-solid fa-chart-line"></i> Política Especial de Recuperação da Aprendizagem</a>
+      <a href="#"><i class="fa-solid fa-heart"></i> Qualidade de Vida</a>
+    </div>
+    <div>
+      <span>SGE 13.8.5</span>
+    </div>
+  </footer>
 
-      if (confirm(`Deseja realmente excluir o aluno "${aluno.nome || 'Sem nome'}"?`)) {
-        alunos = alunos.filter(a => a.id !== id);
-        persistir();
-        render();
-      }
-    }
-
-    // ===== Impressão / PDF =====
-    function imprimirTodos() {
-      if (alunos.length === 0) {
-        alert('Não há alunos cadastrados para imprimir.');
-        return;
-      }
-      filtroImpressao = null;
-      prepararImpressao('Relatório de Alunos · Todos os registros');
-      window.print();
-      finalizarImpressao();
-    }
-
-    function imprimirUm(id) {
-      const aluno = alunos.find(a => a.id === id);
-      if (!aluno) return;
-
-      filtroImpressao = id;
-      prepararImpressao(`Relatório de Aluno · ${aluno.nome || 'Sem nome'}`);
-      render();
-      window.print();
-      finalizarImpressao();
-    }
-
-    function prepararImpressao(titulo) {
-      const agora = new Date();
-      const dataHora = agora.toLocaleString('pt-BR');
-      const info = document.getElementById('print-info');
-      info.textContent = `${titulo} — Gerado em ${dataHora}`;
-    }
-
-    function finalizarImpressao() {
-      const info = document.getElementById('print-info');
-      info.textContent = '';
-
-      if (filtroImpressao !== null) {
-        filtroImpressao = null;
-        render();
-      }
-    }
-
-    // ===== Utilidades =====
-    function escapeHtml(str) {
-      return String(str || '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#39;');
-    }
-
-    // ===== Init =====
-    render();
-  </script>
 </body>
 </html>
-
