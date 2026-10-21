@@ -102,8 +102,10 @@
       display: flex;
       align-items: center;
       padding: 0 1rem;
-      overflow-x: auto;
+      overflow-x: visible;
       white-space: nowrap;
+      position: relative;
+      z-index: 100;
     }
 
     .header-menu-item {
@@ -116,6 +118,8 @@
       gap: 0.4rem;
       border-bottom: 2px solid transparent;
       transition: 0.2s;
+      cursor: pointer;
+      position: relative;
     }
 
     .header-menu-item:hover { color: #004a8d; }
@@ -127,6 +131,59 @@
     }
 
     .header-menu-item i { font-size: 0.9rem; }
+
+    /* =========================================
+       DROPDOWN (MENU SUSPENSO)
+    ========================================= */
+    .dropdown-container {
+      position: relative;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #fff;
+      min-width: 220px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      padding: 0.5rem 0;
+      z-index: 1000;
+      flex-direction: column;
+    }
+
+    .dropdown-menu.show {
+      display: flex;
+    }
+
+    .dropdown-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 1rem;
+      color: #444;
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: background 0.2s;
+    }
+
+    .dropdown-item:hover {
+      background-color: #f1f5f9;
+      color: #004a8d;
+    }
+
+    .dropdown-item i {
+      color: #94a3b8;
+      font-size: 1rem;
+    }
+
+    .dropdown-divider {
+      height: 1px;
+      background-color: #e2e8f0;
+      margin: 0.4rem 0;
+    }
 
     /* =========================================
        CONTAINER PRINCIPAL
@@ -415,9 +472,35 @@
     <a href="#" class="header-menu-item">
       <i class="fa-solid fa-user-graduate"></i> Cadastros <i class="fa-solid fa-caret-down" style="font-size:0.7rem; margin-left:0.2rem;"></i>
     </a>
-    <a href="#" class="header-menu-item">
-      <i class="fa-solid fa-user-check"></i> Matrícula <i class="fa-solid fa-caret-down" style="font-size:0.7rem; margin-left:0.2rem;"></i>
-    </a>
+
+    <!-- Menu Matrícula com Dropdown -->
+    <div class="dropdown-container">
+      <!-- ALTERADO AQUI: href apontando para Unit3 -->
+      <a href="Unit3.html" class="header-menu-item" id="matricula-btn">
+        <i class="fa-solid fa-user-check"></i> Matrícula <i class="fa-solid fa-caret-down" style="font-size:0.7rem; margin-left:0.2rem;"></i>
+      </a>
+      <div class="dropdown-menu" id="matricula-dropdown">
+        <!-- ALTERADO AQUI: href apontando para Unit3 -->
+        <a href="Unit3.html" class="dropdown-item" id="cadastro-link">
+          Cadastro
+          <i class="fa-solid fa-plus"></i>
+        </a>
+        <a href="#" class="dropdown-item">
+          Pesquisa
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </a>
+        <a href="#" class="dropdown-item">
+          Listagem
+          <i class="fa-solid fa-list-ul"></i>
+        </a>
+        <div class="dropdown-divider"></div>
+        <a href="#" class="dropdown-item">
+          Pré-Matrícula Online
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        </a>
+      </div>
+    </div>
+
     <a href="#" class="header-menu-item">
       <i class="fa-solid fa-users-gear"></i> Usuários <i class="fa-solid fa-caret-down" style="font-size:0.7rem; margin-left:0.2rem;"></i>
     </a>
@@ -537,6 +620,32 @@
       <span>SGE 13.8.5</span>
     </div>
   </footer>
+
+  <!-- ================= SCRIPT PARA O DROPDOWN ================= -->
+  <script>
+    const matriculaBtn = document.getElementById('matricula-btn');
+    const matriculaDropdown = document.getElementById('matricula-dropdown');
+    const cadastroLink = document.getElementById('cadastro-link');
+
+    // Adiciona o evento de clique no botão Matrícula
+    matriculaBtn.addEventListener('click', function(event) {
+      event.preventDefault(); // Impede o redirecionamento imediato para mostrar o dropdown primeiro
+      matriculaDropdown.classList.toggle('show');
+    });
+
+    // Fecha o menu se clicar em qualquer lugar fora dele
+    window.addEventListener('click', function(event) {
+      if (!matriculaBtn.contains(event.target) && !matriculaDropdown.contains(event.target)) {
+        matriculaDropdown.classList.remove('show');
+      }
+    });
+
+    // Fecha o dropdown quando clicar em Cadastro para ir para Unit3
+    cadastroLink.addEventListener('click', function() {
+      matriculaDropdown.classList.remove('show');
+      // O redirecionamento para Unit3.html acontece automaticamente pelo atributo href
+    });
+  </script>
 
 </body>
 </html>
